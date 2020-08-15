@@ -1,23 +1,28 @@
-import React from 'react';
-import { Cameras, Scanner } from 'react-instascan';
+import React, { useState } from 'react';
+import QrReader from 'react-qr-reader';
 
 function QrReaderPage() {
-  const onScan = (e) => {
-    console.log(e.currentTarget);
+  const [Data, setData] = useState('');
+
+  const handleScan = (data) => {
+    if (data) {
+      setData(data);
+    }
+  };
+  const handleError = (err) => {
+    console.error(err);
   };
 
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <Cameras>
-        {(cameras) => (
-          <div>
-            <h1>Scan the code!</h1>
-            <Scanner camera={cameras[0]} onScan={onScan}>
-              <video style={{ width: 400, height: 400 }} />
-            </Scanner>
-          </div>
-        )}
-      </Cameras>
+      <QrReader
+        delay={300}
+        onError={handleError}
+        onScan={handleScan}
+        style={{ width: '500px' }}
+      />
+
+      <p>{Data}</p>
     </div>
   );
 }
