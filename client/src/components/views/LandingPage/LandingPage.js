@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 export const sectionName = ['1F 구내식당', 'B1 구내식당', '1F Starbucks'];
 

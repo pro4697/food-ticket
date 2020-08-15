@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { Button } from 'antd';
 import { sectionName } from '../LandingPage/LandingPage';
 import { SERVER } from '../../Config.js';
-import { isInteger } from 'formik';
 
 const sidebar = {
   open: (height = 1000) => ({
@@ -28,6 +27,7 @@ const sidebar = {
 
 function MenuPage(props) {
   const section = props.match.params.section;
+  const MaxCnt = 10;
 
   const [Menu, setMenu] = useState([]);
   const [Cart, setCart] = useState([]);
@@ -56,9 +56,13 @@ function MenuPage(props) {
   }, [section]);
 
   const onClick = (e) => {
-    Menu[e.currentTarget.value].cnt += 1;
-    setMenu(Menu);
-    setPrice(Price + Menu[e.currentTarget.value].price);
+    if (Menu[e.currentTarget.value].cnt > MaxCnt - 1) {
+      alert(`${MaxCnt}그릇 이상 주문할 수 없습니다.`);
+    } else {
+      Menu[e.currentTarget.value].cnt += 1;
+      setMenu(Menu);
+      setPrice(Price + Menu[e.currentTarget.value].price);
+    }
   };
 
   const onDown = (e) => {
@@ -77,30 +81,54 @@ function MenuPage(props) {
   };
 
   const onSubmit = async () => {
+    let variable = { _id: localStorage.getItem('userId'), Cart: [] };
+    Menu.map((menu) => {
+      if (menu.cnt > 0) {
+        variable.Cart.push(menu);
+      }
+    });
+
+    axios.post(`${SERVER}/api/ticket/payment`, variable).then((response) => {
+      if (!response.data.success) {
+        alert('식권 구매후 저장 오류');
+      }
+    });
+    props.history.push('/');
     ////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////
     // auth 체크후 비로그인이면 로그인 페이지로 튕구기
-    BootPay.request({
-      price: Price, // 결제할 금액
-      application_id: '5cc7f458396fa6771abd07a8',
-      name: `식권 ${Menu.getCnt()}장`, // 아이템 이름,
-      order_id: '1234', //(이 결제를 식별할 수 있는 고유 주문 번호)
-      // pg: '',
-      // method: '',
-      show_agree_window: 0, // 결제 동의창 띄우기 여부 1 - 띄움, 0 - 띄우지 않음
-    })
-      .error(function (data) {
-        let msg = '결제 에러입니다.: ' + JSON.stringify(data);
-        alert(msg);
-        console.log(data);
-      })
-      .cancel(() => {})
-      .done(() => {
-        // axios _id, {menuName, menuIdx}
-        // let key = []
-        // key.push(암호화(user.Data._id + menu.name + 발급순서))
-        props.history.push('/');
-      });
+    // BootPay.request({
+    //   price: Price, // 결제할 금액
+    //   application_id: '5cc7f458396fa6771abd07a8',
+    //   name: `식권 ${Menu.getCnt()}장`, // 아이템 이름,
+    //   order_id: '1234', //(이 결제를 식별할 수 있는 고유 주문 번호)
+    //   // pg: '',
+    //   // method: '',
+    //   show_agree_window: 0, // 결제 동의창 띄우기 여부 1 - 띄움, 0 - 띄우지 않음
+    // })
+    //   .error(function (data) {
+    //     let msg = '결제 에러입니다.: ' + JSON.stringify(data);
+    //     alert(msg);
+    //     console.log(data);
+    //   })
+    //   .cancel(() => {})
+    //   .done(() => {
+    //     let variable = { _id: localStorage.getItem('userId'), Cart: [] };
+    //     Menu.map((menu) => {
+    //       if (menu.cnt > 0) {
+    //         variable.Cart.push(menu);
+    //       }
+    //     });
+
+    //     axios
+    //       .post(`${SERVER}/api/ticket/payment`, variable)
+    //       .then((response) => {
+    //         if (!response.data.success) {
+    //           alert('식권 구매후 저장 오류');
+    //         }
+    //       });
+    //     props.history.push('/');
+    //   });
   };
 
   if (Menu.length !== 0) {
