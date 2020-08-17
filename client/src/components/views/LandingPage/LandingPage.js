@@ -2,17 +2,6 @@ import React from 'react';
 
 export const sectionName = ['1F 구내식당', 'B1 구내식당', '1F Starbucks'];
 
-const page = {
-  in: {
-    opacity: 1,
-    y: 0,
-  },
-  out: {
-    opacity: 0,
-    y: '10vh',
-  },
-};
-
 function LandingPage() {
   const CardRender = (name, idx) => (
     <a href={`/section/${idx}`} className='card__container' key={idx}>

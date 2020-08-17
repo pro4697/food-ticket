@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import BootPay from 'bootpay-js';
 import { motion } from 'framer-motion';
@@ -29,8 +30,8 @@ function MenuPage(props) {
   const section = props.match.params.section;
   const MaxCnt = 10;
 
+  const user = useSelector((state) => state.user);
   const [Menu, setMenu] = useState([]);
-  const [Cart, setCart] = useState([]);
   const [Price, setPrice] = useState(0);
 
   useEffect(() => {
@@ -38,16 +39,10 @@ function MenuPage(props) {
       .post(`${SERVER}/api/menus/getMenu`, { section: section })
       .then((response) => {
         if (response.data.success) {
+          //cnt property 생성
           response.data.result.forEach((props) => {
             props.cnt = 0;
           });
-          response.data.result.getCnt = function () {
-            let count = 0;
-            this.map((props) => {
-              count += props.cnt;
-            });
-            return count;
-          };
           setMenu(response.data.result);
         } else {
           alert('메뉴 불러오기 실패');
@@ -56,32 +51,44 @@ function MenuPage(props) {
   }, [section]);
 
   const onClick = (e) => {
-    if (Menu[e.currentTarget.value].cnt > MaxCnt - 1) {
+    let targetIdx = parseInt(e.currentTarget.value);
+    if (Menu[targetIdx].cnt > MaxCnt - 1) {
       alert(`${MaxCnt}그릇 이상 주문할 수 없습니다.`);
     } else {
-      Menu[e.currentTarget.value].cnt += 1;
-      setMenu(Menu);
-      setPrice(Price + Menu[e.currentTarget.value].price);
+      setMenu(
+        Menu.map((item, idx) =>
+          idx === targetIdx ? { ...item, cnt: item.cnt + 1 } : item
+        )
+      );
+      setPrice(Price + Menu[targetIdx].price);
     }
   };
 
   const onDown = (e) => {
-    Menu[e.currentTarget.value].cnt -= 1;
-    setMenu(Menu);
-    setPrice(Price - Menu[e.currentTarget.value].price);
+    let targetIdx = parseInt(e.currentTarget.value);
+    setMenu(
+      Menu.map((item, idx) =>
+        idx === targetIdx ? { ...item, cnt: item.cnt - 1 } : item
+      )
+    );
+    setPrice(Price - Menu[targetIdx].price);
   };
 
   const onRemove = (e) => {
-    setPrice(
-      Price -
-        Menu[e.currentTarget.value].price * Menu[e.currentTarget.value].cnt
+    let targetIdx = parseInt(e.currentTarget.value);
+    setPrice(Price - Menu[targetIdx].price * Menu[targetIdx].cnt);
+    setMenu(
+      Menu.map((item, idx) => (idx === targetIdx ? { ...item, cnt: 0 } : item))
     );
-    Menu[e.currentTarget.value].cnt = 0;
-    setMenu(Menu);
   };
 
   const onSubmit = async () => {
-    let variable = { _id: localStorage.getItem('userId'), Cart: [] };
+    //////////////////////////////////// 페이지 이동 제대로 안됨
+    if (!user.userData.isAuth) {
+      alert('회원가입이 필요한 서비스입니다.');
+      props.history.push('/login');
+    }
+    let variable = { _id: user.userData._id, Cart: [] };
     Menu.map((menu) => {
       if (menu.cnt > 0) {
         variable.Cart.push(menu);
@@ -113,7 +120,7 @@ function MenuPage(props) {
     //   })
     //   .cancel(() => {})
     //   .done(() => {
-    //     let variable = { _id: localStorage.getItem('userId'), Cart: [] };
+    //     let variable = { _id: user.userData._id, Cart: [] };
     //     Menu.map((menu) => {
     //       if (menu.cnt > 0) {
     //         variable.Cart.push(menu);
@@ -162,7 +169,7 @@ function MenuPage(props) {
         <motion.div
           className='background'
           variants={sidebar}
-          animate={Menu.getCnt() > 0 ? 'open' : 'closed'}
+          animate={Price > 0 ? 'open' : 'closed'}
         >
           <div
             style={{ marginTop: '50px', fontSize: '24px', textAlign: 'center' }}
@@ -177,6 +184,7 @@ function MenuPage(props) {
                     <div className='icon-placeholder'>
                       <img
                         src={`${SERVER}/${menu.url}`}
+                        alt={menu.name}
                         style={{
                           height: '100%',
                         }}
@@ -200,6 +208,8 @@ function MenuPage(props) {
                     </Button>
                   </li>
                 );
+              } else {
+                return null;
               }
             })}
           </ul>
@@ -222,7 +232,9 @@ function MenuPage(props) {
         </motion.div>
       </div>
     );
-  } else return null;
+  } else {
+    return null;
+  }
 }
 
 export default MenuPage;
