@@ -61,23 +61,20 @@ export const sectionName = [
   '1F Starbucks',
   '식권 보관함',
 ];
-const hrefName = ['/section/', '/section/', '/section/', '/ticket'];
 
 function LandingPage() {
-  const isSection = (idx) => (idx < 4 ? idx : '');
-
-  const CardRender = (name, idx) => (
-    <Card href={`${hrefName[idx - 1]}${isSection(idx)}`} key={idx}>
-      <Img src={`/images/${idx}.jpg`} alt='' />
-      <CardTitle>{name}</CardTitle>
-    </Card>
-  );
+  const isSection = (idx) => (idx < 4 ? `/section/${idx}` : '/ticket');
 
   return (
     <App>
       <Title>모바일 식권 시스템</Title>
       <CardContainer>
-        {sectionName.map((section, idx) => CardRender(section, idx + 1))}
+        {sectionName.map((section, idx) => (
+          <Card href={isSection(idx + 1)} key={idx}>
+            <Img src={`/images/${idx + 1}.jpg`} alt={sectionName[idx]} />
+            <CardTitle>{section}</CardTitle>
+          </Card>
+        ))}
       </CardContainer>
     </App>
   );
