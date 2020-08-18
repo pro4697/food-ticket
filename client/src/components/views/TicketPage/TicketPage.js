@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { Row, Col } from 'antd';
 import { SERVER } from '../../Config.js';
 import { Modal, Button } from 'antd';
 import { sectionName } from '../LandingPage/LandingPage';
@@ -36,26 +37,28 @@ function TicketPage() {
 
   return (
     <div className='app'>
-      <div
+      <Row
+        gutter={[32, 16]}
         className='menu__container'
-        style={{ width: '55%', height: '100%', display: 'flex' }}
+        style={{ width: '85%', height: '100%' }}
       >
         {Ticket.map((ticket, idx) => (
-          <Button
-            onClick={onClick}
-            value={idx}
-            key={idx}
-            style={{ height: '300px' }}
-          >
-            <img
-              src={`${SERVER}/${ticket.url}`}
-              alt={ticket.name}
-              style={{ height: '100%' }}
-            />
-            <div>{ticket.name}</div>
-          </Button>
+          <Col lg={4} md={8} xs={12} key={idx}>
+            <Button
+              onClick={onClick}
+              value={idx}
+              style={{ border: '0', width: '250px', height: '250px' }}
+            >
+              <img
+                src={`${SERVER}/${ticket.url}`}
+                alt={ticket.name}
+                style={{ width: '100%' }}
+              />
+              <div>{ticket.name}</div>
+            </Button>
+          </Col>
         ))}
-      </div>
+      </Row>
 
       <Modal
         title={`${PopupData.name} / ${sectionName[PopupData.section - 1]}`}

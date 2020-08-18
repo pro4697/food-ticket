@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER } from './types';
+import {
+  LOGIN_USER,
+  REGISTER_USER,
+  AUTH_USER,
+  LOGOUT_USER,
+  DELETE_USER,
+} from './types';
 import { headersConfig, SERVER } from '../components/Config.js';
 
 export function registerUser(dataToSubmit) {
@@ -42,6 +48,20 @@ export function logoutUser() {
 
   return {
     type: LOGOUT_USER,
+    payload: request,
+  };
+}
+
+export function deleteUser() {
+  let dataToSubmit = {
+    userId: localStorage.getItem('userId'),
+  };
+  const request = axios
+    .post(`${SERVER}/api/users/delete`, dataToSubmit)
+    .then((response) => response.data);
+
+  return {
+    type: DELETE_USER,
     payload: request,
   };
 }

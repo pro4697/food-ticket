@@ -2,29 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import BootPay from 'bootpay-js';
-import { motion } from 'framer-motion';
-import { Button } from 'antd';
-import { sectionName } from '../LandingPage/LandingPage';
 import { SERVER } from '../../Config.js';
 
-const sidebar = {
-  open: (height = 1000) => ({
-    clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
-    transition: {
-      type: 'spring',
-      stiffness: 20,
-      restDelta: 1,
-    },
-  }),
-  closed: () => ({
-    clipPath: 'circle(0px at 40px 40px)',
-    transition: {
-      type: 'spring',
-      stiffness: 400,
-      damping: 40,
-    },
-  }),
-};
+import MenuContainer from './Sections/MenuContainer';
+import CartContainer from './Sections/CartContainer';
 
 function MenuPage(props) {
   const section = props.match.params.section;
@@ -86,7 +67,7 @@ function MenuPage(props) {
     //////////////////////////////////// 페이지 이동 제대로 안됨
     if (!user.userData.isAuth) {
       alert('회원가입이 필요한 서비스입니다.');
-      props.history.push('/login');
+      window.location.href = '/login';
     }
     let variable = { _id: user.userData._id, Cart: [] };
     Menu.map((menu) => {
@@ -140,96 +121,17 @@ function MenuPage(props) {
 
   if (Menu.length !== 0) {
     return (
-      <div className='app'>
-        <div
-          className='menu__container'
-          style={{ width: '55%', height: '100%', display: 'flex' }}
-        >
-          {Menu.map((menu, idx) => (
-            <button
-              onClick={onClick}
-              value={idx}
-              key={idx}
-              style={{ backgroundColor: 'transparent', border: '0' }}
-            >
-              <div>
-                <img
-                  src={`${SERVER}/${menu.url}`}
-                  alt=''
-                  style={{ height: '250px' }}
-                />
-                <br />
-                {menu.name}
-                <br />
-                {menu.price}
-              </div>
-            </button>
-          ))}
-        </div>
-        <motion.div
-          className='background'
-          variants={sidebar}
-          animate={Price > 0 ? 'open' : 'closed'}
-        >
-          <div
-            style={{ marginTop: '50px', fontSize: '24px', textAlign: 'center' }}
-          >
-            {sectionName[section]}
-          </div>
-          <ul className='nav__ul'>
-            {Menu.map((menu, idx) => {
-              if (menu.cnt !== 0) {
-                return (
-                  <li className='nav__li' key={idx}>
-                    <div className='icon-placeholder'>
-                      <img
-                        src={`${SERVER}/${menu.url}`}
-                        alt={menu.name}
-                        style={{
-                          height: '100%',
-                        }}
-                      />
-                    </div>
-                    <div className='text-placeholder'>{menu.name}</div>
-                    <div
-                      className='text-placeholder'
-                      style={{ float: 'right' }}
-                    >
-                      {menu.price} x {menu.cnt}
-                    </div>
-                    <Button size='small' onClick={onClick} value={idx}>
-                      ∧
-                    </Button>
-                    <Button size='small' onClick={onDown} value={idx}>
-                      ∨
-                    </Button>
-                    <Button size='small' onClick={onRemove} value={idx}>
-                      X
-                    </Button>
-                  </li>
-                );
-              } else {
-                return null;
-              }
-            })}
-          </ul>
-          <div className='buy_btn'>
-            <div
-              className='text-placeholder'
-              style={{
-                display: 'block',
-                fontSize: '18px',
-                textAlign: 'center',
-              }}
-            >
-              {Price} 원
-            </div>
-            <hr />
-            <Button onClick={onSubmit} style={{ width: '100%' }}>
-              구매하기
-            </Button>
-          </div>
-        </motion.div>
+      <div className='app row'>
+        <MenuContainer Menu={Menu} onClick={onClick} />
+        <CartContainer
+          Menu={Menu}
+          Price={Price}
+          section={section}
+          onClick={onClick}
+          onDown={onDown}
+          onRemove={onRemove}
+          onSubmit={onSubmit}
+        />
       </div>
     );
   } else {
@@ -238,14 +140,3 @@ function MenuPage(props) {
 }
 
 export default MenuPage;
-
-/*
-.contentsWrap {
-  position: relative;
-  max-width: 1200px;
-  margin: 0px auto 0px;
-  padding: 16px 16px 50px;
-  box-sizing: border-box;
-  min-height: 83vh;
-}
-*/

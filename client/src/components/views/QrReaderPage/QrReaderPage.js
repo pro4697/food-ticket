@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import QrReader from 'react-qr-reader';
-import { List, Typography } from 'antd';
+import { List } from 'antd';
 import { SERVER } from '../../Config.js';
 
 function QrReaderPage() {

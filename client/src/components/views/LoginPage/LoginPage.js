@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { loginUser } from '../../../_actions/user_actions';
+import { loginUser, registerUser } from '../../../_actions/user_actions';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Form, Input, Button, Checkbox, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
 import { headersConfig } from '../../Config';
-
+import KakaoBtn from '../KakaoBtn/KakaoBtn';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
@@ -22,9 +22,84 @@ function LoginPage(props) {
     setRememberMe(!rememberMe);
   };
 
+  const saveUserData = (props) => {
+    localStorage.setItem('userId', props.userId);
+    localStorage.setItem('x_token', props.token);
+    localStorage.setItem('x_tokenExp', props.tokenExp);
+    headersConfig.headers['x_token'] = localStorage.getItem('x_token');
+    headersConfig.headers['x_tokenExp'] = localStorage.getItem('x_tokenExp');
+  };
+
   const initialEmail = localStorage.getItem('rememberMe')
     ? localStorage.getItem('rememberMe')
     : '';
+
+  const loginAction = (values, isKakao, { setSubmitting }) => {
+    setTimeout(() => {
+      let dataToSubmit = {
+        email: values.email,
+        password: values.password,
+      };
+
+      dispatch(loginUser(dataToSubmit))
+        .then((response) => {
+          if (response.payload.loginSuccess) {
+            // 로그인 성공시
+            saveUserData(response.payload);
+            if (rememberMe === true) {
+              localStorage.setItem('rememberMe', values.email);
+            } else {
+              localStorage.removeItem('rememberMe');
+            }
+            props.history.push('/');
+          } else {
+            // 로그인 실패시
+            if (isKakao) {
+              // 카카오로 처음 로그인 하는경우 자동 회원가입
+              let _dataToSubmit = {
+                email: values.email,
+                password: values.password,
+                name: values.name,
+                image: values.image,
+              };
+              dispatch(registerUser(_dataToSubmit)).then((response) => {
+                // 자동 회원가입
+                if (response.payload.success) {
+                  alert('회원가입이 완료되었습니다.');
+                  dispatch(loginUser(dataToSubmit)).then((response) => {
+                    // 자동 회원가입후 로그인 처리
+                    if (response.payload.loginSuccess) {
+                      saveUserData(response.payload);
+                      props.history.push('/');
+                    } else {
+                      // 로그인 에서 메시지 출력
+                      setFormErrorMessage(
+                        'Check out your Account or Password again'
+                      );
+                    }
+                  });
+                } else {
+                  // 자동 회원가입 실패시
+                  alert(response.payload.err.errmsg);
+                }
+              });
+            } else {
+              // 카카오 계정이 아닌경우 에러메시지 출력
+              setFormErrorMessage('Check out your Account or Password again');
+            }
+          }
+        })
+        .catch((err) => {
+          setFormErrorMessage(err);
+          setTimeout(() => {
+            setFormErrorMessage('');
+          }, 3000);
+        });
+      if (setSubmitting) {
+        setSubmitting(false);
+      }
+    }, 500);
+  };
 
   return (
     <Formik
@@ -41,43 +116,7 @@ function LoginPage(props) {
           .required('Password is required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          let dataToSubmit = {
-            email: values.email,
-            password: values.password,
-          };
-
-          dispatch(loginUser(dataToSubmit))
-            .then((response) => {
-              if (response.payload.loginSuccess) {
-                localStorage.setItem('userId', response.payload.userId);
-                localStorage.setItem('x_token', response.payload.token);
-                localStorage.setItem('x_tokenExp', response.payload.tokenExp);
-
-                headersConfig.headers['x_token'] = localStorage.getItem(
-                  'x_token'
-                );
-                headersConfig.headers['x_tokenExp'] = localStorage.getItem(
-                  'x_tokenExp'
-                );
-                if (rememberMe === true) {
-                  window.localStorage.setItem('rememberMe', values.id);
-                } else {
-                  localStorage.removeItem('rememberMe');
-                }
-                props.history.push('/');
-              } else {
-                setFormErrorMessage('Check out your Account or Password again');
-              }
-            })
-            .catch((err) => {
-              setFormErrorMessage(err);
-              setTimeout(() => {
-                setFormErrorMessage('');
-              }, 3000);
-            });
-          setSubmitting(false);
-        }, 500);
+        loginAction(values, false, { setSubmitting });
       }}
     >
       {(props) => {
@@ -162,13 +201,13 @@ function LoginPage(props) {
                   >
                     Remember me
                   </Checkbox>
-                  <a
+                  {/* <a
                     className='login-form-forgot'
                     href='/reset_password'
                     style={{ float: 'right' }}
                   >
                     forgot password
-                  </a>
+                  </a> */}
                   <div>
                     <Button
                       type='primary'
@@ -180,6 +219,7 @@ function LoginPage(props) {
                     >
                       Log in
                     </Button>
+                    <KakaoBtn loginAction={loginAction} />
                   </div>
                   Or <a href='/register'>register now!</a>
                 </Form.Item>
