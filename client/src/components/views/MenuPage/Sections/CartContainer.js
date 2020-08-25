@@ -105,7 +105,11 @@ function CartContainer({
           if (menu.cnt > 0)
             return (
               <Item>
-                <Img src={`${SERVER}/${menu.url}`} alt={menu.name} />
+                <Img
+                  src={`${SERVER}/${menu.url}`}
+                  draggable='false'
+                  alt={menu.name}
+                />
                 <Text>{menu.name}</Text>
                 <PriceCnt>{`${menu.price} x ${menu.cnt}`}</PriceCnt>
                 <Button size='small' onClick={onClick} value={idx}>

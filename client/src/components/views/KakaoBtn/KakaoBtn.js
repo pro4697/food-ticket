@@ -4,13 +4,14 @@ import KaKaoLogin from 'react-kakao-login';
 
 const KaKaoButton = styled(KaKaoLogin)`
   padding: 0;
+  margin-bottom: 10px;
   width: 100%;
   height: 32px;
   line-height: 32px;
   color: #783c00;
   background-color: #ffeb00;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 2px;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
@@ -44,7 +45,7 @@ function KakaoBtn({ loginAction }) {
   };
 
   const responseFail = (err) => {
-    alert(err);
+    alert(JSON.stringify(err));
   };
 
   return (

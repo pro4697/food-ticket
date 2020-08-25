@@ -45,7 +45,11 @@ function MenuContainer({ Menu, onClick }) {
         <Col lg={4} md={6} sm={8} xs={12} key={idx}>
           <Item onClick={onClick} value={idx}>
             <ItemInfo>{item.name}</ItemInfo>
-            <Img src={`${SERVER}/${item.url}`} alt={item.name} />
+            <Img
+              draggable='false'
+              src={`${SERVER}/${item.url}`}
+              alt={item.name}
+            />
             <ItemInfo>{item.price}원</ItemInfo>
           </Item>
         </Col>

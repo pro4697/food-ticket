@@ -1,6 +1,6 @@
 {
   "name": "Food-Ticket",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Basic implementation",
   "main": "index.js",
   "engine": {
@@ -28,8 +28,7 @@
     "moment": "^2.24.0",
     "mongoose": "^5.4.20",
     "multer": "^1.4.2",
-    "nodemailer": "^6.4.2",
-    "react-qr-reader": "^2.2.1"
+    "nodemailer": "^6.4.2"
   },
   "devDependencies": {
     "concurrently": "^4.1.2",

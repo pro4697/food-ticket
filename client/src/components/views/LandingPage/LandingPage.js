@@ -43,23 +43,14 @@ const A = styled.a`
   transition: 0.2s;
 `;
 
-const Card = styled(Col)`
-  position: relative !important;
-  &:hover ${A} {
-    letter-spacing: 2px;
-    border: 30px solid transparent;
-    transition: 0.2s !important;
-    transform: scale(1.08) !important;
-  }
-`;
-
 const CardTitle = styled.span`
   display: block;
   z-index: 1;
   color: black;
   font-size: 24px;
   text-align: center;
-  transition: order 0.5s;
+  letter-spacing: 2px;
+  transition: 0.2s;
   @media (max-width: 1200px) {
     font-size: 20px;
   }
@@ -68,6 +59,27 @@ const CardTitle = styled.span`
   }
   @media (max-width: 767px) {
     font-size: 16px;
+  }
+`;
+
+const Card = styled(Col)`
+  position: relative !important;
+  &:hover ${A} {
+    border: 20px solid transparent;
+    transition: 0.2s !important;
+    transform: scale(1.08) !important;
+  }
+  &:hover ${CardTitle} {
+    font-size: 20px;
+    @media (max-width: 1200px) {
+      font-size: 18px;
+    }
+    @media (max-width: 992px) {
+      font-size: 16px;
+    }
+    @media (max-width: 767px) {
+      font-size: 14px;
+    }
   }
 `;
 
@@ -85,7 +97,7 @@ function LandingPage() {
     <App>
       <Title>
         {user.userData !== undefined ? (
-          `${user.userData.name}님 환영합니다`
+          `${user.userData.name || 'Guest'}님 환영합니다`
         ) : (
           <LoadingOutlined />
         )}
@@ -93,9 +105,10 @@ function LandingPage() {
       <CardContainer gutter={[32, 32]}>
         {sectionName.map((section, idx) => (
           <Card md={6} sm={12} xs={12} key={idx}>
-            <A href={isSection(idx + 1)} key={idx}>
+            <A href={isSection(idx + 1)} draggable='false' key={idx}>
               <Img
                 src={`/images/${idx + 1}.jpg`}
+                draggable='false'
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = `/images/${idx + 1}.png`;

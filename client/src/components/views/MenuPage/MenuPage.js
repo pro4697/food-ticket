@@ -33,7 +33,7 @@ function MenuPage(props) {
       .then((response) => {
         if (response.data.success) {
           //cnt property 생성
-          response.data.result.forEach((props) => {
+          response.data.result.map((props) => {
             props.cnt = 0;
           });
           setMenu(response.data.result);
@@ -42,6 +42,14 @@ function MenuPage(props) {
         }
       });
   }, [section]);
+
+  const getCnt = () => {
+    let count = 0;
+    Menu.map((props) => {
+      count += props.cnt;
+    });
+    return count;
+  };
 
   const onClick = (e) => {
     let targetIdx = parseInt(e.currentTarget.value);
@@ -82,52 +90,38 @@ function MenuPage(props) {
       return;
     }
 
-    let variable = { _id: user.userData._id, Cart: [] };
-    Menu.forEach((menu) => {
-      if (menu.cnt > 0) {
-        variable.Cart.push(menu);
-      }
-    });
+    await BootPay.request({
+      price: Price,
+      application_id: '5cc7f458396fa6771abd07a8',
+      name: `식권 ${getCnt()}장`,
+      order_id: '1234', //(이 결제를 식별할 수 있는 고유 주문 번호)
+      // pg: '',
+      // method: '',
+      show_agree_window: 0, // 결제 동의창 띄우기 여부 1 - 띄움, 0 - 띄우지 않음
+    })
+      .error(function (data) {
+        let msg = '결제 에러입니다.: ' + JSON.stringify(data);
+        alert(msg);
+        console.log(data);
+      })
+      .cancel(() => {})
+      .done(() => {
+        let variable = { _id: user.userData._id, Cart: [] };
+        Menu.map((menu) => {
+          if (menu.cnt > 0) {
+            variable.Cart.push(menu);
+          }
+        });
 
-    axios.post(`${SERVER}/api/ticket/payment`, variable).then((response) => {
-      if (!response.data.success) {
-        alert('식권 구매후 저장 오류');
-      }
-    });
-    props.history.push('/ticket');
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    // BootPay.request({
-    //   price: Price, // 결제할 금액
-    //   application_id: '5cc7f458396fa6771abd07a8',
-    //   name: `식권 ${Menu.getCnt()}장`, // 아이템 이름,
-    //   order_id: '1234', //(이 결제를 식별할 수 있는 고유 주문 번호)
-    //   // pg: '',
-    //   // method: '',
-    //   show_agree_window: 0, // 결제 동의창 띄우기 여부 1 - 띄움, 0 - 띄우지 않음
-    // })
-    //   .error(function (data) {
-    //     let msg = '결제 에러입니다.: ' + JSON.stringify(data);
-    //     alert(msg);
-    //     console.log(data);
-    //   })
-    //   .cancel(() => {})
-    //   .done(() => {
-    //     let variable = { _id: user.userData._id, Cart: [] };
-    //     Menu.map((menu) => {
-    //       if (menu.cnt > 0) {
-    //         variable.Cart.push(menu);
-    //       }
-    //     });
-
-    //     axios
-    //       .post(`${SERVER}/api/ticket/payment`, variable)
-    //       .then((response) => {
-    //         if (!response.data.success) {
-    //           alert('식권 구매후 저장 오류');
-    //         }
-    //       });
-    //     props.history.push('/ticket');
-    //   });
+        axios
+          .post(`${SERVER}/api/ticket/payment`, variable)
+          .then((response) => {
+            if (!response.data.success) {
+              alert('식권 구매후 저장 오류');
+            }
+          });
+        props.history.push('/ticket');
+      });
   };
 
   if (Menu.length !== 0) {

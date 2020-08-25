@@ -24,6 +24,11 @@ const FormErrorMessage = styled.p`
   border-radius: 10px;
 `;
 
+const StyledBtn = styled(Button)`
+  width: 100%;
+  margin: 10px 0;
+`;
+
 function LoginPage(props) {
   const dispatch = useDispatch();
   const rememberMeChecked = localStorage.getItem('rememberMe') ? true : false;
@@ -207,14 +212,13 @@ function LoginPage(props) {
                   >
                     forgot password
                   </a> */}
-                <Button
+                <StyledBtn
                   type='primary'
-                  style={{ minWidth: '100%' }}
                   disabled={isSubmitting}
                   onClick={handleSubmit}
                 >
                   Log in
-                </Button>
+                </StyledBtn>
                 <br />
                 <KakaoBtn loginAction={loginAction} />
                 Or <a href='/register'>register now!</a>

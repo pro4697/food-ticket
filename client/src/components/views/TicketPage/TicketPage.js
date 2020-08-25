@@ -104,7 +104,11 @@ function TicketPage() {
                 color={BgColor[idx % BgColor.length]}
               >
                 <ItemInfo>{sectionName[ticket.section - 1]}</ItemInfo>
-                <Img src={`${SERVER}/${ticket.url}`} alt={ticket.name} />
+                <Img
+                  src={`${SERVER}/${ticket.url}`}
+                  draggable='false'
+                  alt={ticket.name}
+                />
                 <ItemInfo>{ticket.name}</ItemInfo>
               </Item>
             </Col>
