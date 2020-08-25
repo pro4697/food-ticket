@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
-import { Typography, Button, Form, message, Input, Icon, Select } from 'antd';
+import { Typography, Button, Form, message, Input, Select } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import Dropzone from 'react-dropzone';
 import { SERVER } from '../../Config.js';
 
@@ -11,6 +13,43 @@ const SectionOptions = [
   { value: 2, label: 'B1 구내식당' },
   { value: 3, label: '1F Starbucks' },
 ];
+
+const Upload = styled.div`
+  max-width: 320px;
+  margin: 2rem auto;
+  text-align: center;
+`;
+
+const DropBox = styled.div`
+  width: 320px;
+  height: 180px;
+  border: 1px solid lightgray;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledInput = styled(Input)`
+  margin-bottom: 20px !important;
+  border-radius: 4px !important;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+`;
+
+const StyledSelect = styled(Select)`
+  width: 100%;
+  & .ant-select-selector {
+    border-radius: 4px !important;
+  }
+  margin-bottom: 30px !important;
+  text-align: left;
+`;
 
 function MenuUploadPage(props) {
   const [Name, setName] = useState('');
@@ -83,93 +122,49 @@ function MenuUploadPage(props) {
   };
 
   return (
-    <div style={{ maxWidth: '320px', margin: '2rem auto' }}>
-      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-        <Title level={2}>Upload Menu</Title>
-      </div>
-
+    <Upload>
+      <Title level={2}>Upload Menu</Title>
       <Form required onSubmit={onSubmit}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Dropzone
-            onDrop={onDrop}
-            accept='image/*'
-            multiple={false}
-            maxSize={3072000}
-          >
-            {({ getRootProps, getInputProps }) => (
-              <div
-                style={{
-                  width: '320px',
-                  height: '180px',
-                  border: '1px solid lightgray',
-                  display: 'flex',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                {...getRootProps()}
-              >
-                <input {...getInputProps()} />
-                {Preview && (
-                  <img
-                    src={Preview}
-                    alt='thumbnail'
-                    style={{
-                      height: '100%',
-                    }}
-                  />
-                )}
-
-                {!Preview && <Icon type='plus' style={{ fontSize: '3rem' }} />}
-              </div>
-            )}
-          </Dropzone>
-        </div>
-        <br />
-        <br />
-        <div
-          style={{
-            width: '320px',
-            display: 'block',
-            margin: '0',
-          }}
+        <Dropzone
+          onDrop={onDrop}
+          accept='image/*'
+          multiple={false}
+          maxSize={3072000}
         >
-          <Input
-            onChange={onPriceChange}
-            placeholder='File name'
-            value={Name}
-            style={{ width: '100%', marginBottom: '30px' }}
-            disabled
-          />
-
-          <Input
-            onChange={onPriceChange}
-            placeholder='Only number'
-            prefix='₩'
-            suffix='원'
-            maxLength={5}
-            value={Price}
-            style={{ width: '100%', marginBottom: '30px' }}
-          />
-
-          <Select
-            defaultValue={SectionOptions[0].label}
-            onChange={onSectionChange}
-            style={{ width: '100%', marginBottom: '30px' }}
-          >
-            {SectionOptions.map((item, idx) => (
-              <Select.Option value={item.value} key={idx}>
-                {item.label}
-              </Select.Option>
-            ))}
-          </Select>
-          <Button type='primary' onClick={onSubmit} style={{ width: '100%' }}>
-            Submit
-          </Button>
-        </div>
+          {({ getRootProps, getInputProps }) => (
+            <DropBox {...getRootProps()}>
+              <input {...getInputProps()} />
+              {Preview && (
+                <img src={Preview} alt='' style={{ height: '100%' }} />
+              )}
+              {!Preview && <PlusOutlined style={{ fontSize: '3rem' }} />}
+            </DropBox>
+          )}
+        </Dropzone>
+        <StyledInput placeholder='File name' value={Name} disabled />
+        <StyledInput
+          onChange={onPriceChange}
+          placeholder='Only number'
+          prefix='₩'
+          // suffix='원'
+          maxLength={5}
+          value={Price}
+        />
+        <StyledSelect
+          defaultValue={SectionOptions[0].label}
+          onChange={onSectionChange}
+        >
+          {SectionOptions.map((item, idx) => (
+            <Select.Option value={item.value} key={idx}>
+              {item.label}
+            </Select.Option>
+          ))}
+        </StyledSelect>
+        <Button type='primary' onClick={onSubmit} style={{ width: '100%' }}>
+          Submit
+        </Button>
       </Form>
-    </div>
+    </Upload>
   );
 }
 

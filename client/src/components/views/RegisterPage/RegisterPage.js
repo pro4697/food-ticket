@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { registerUser } from '../../../_actions/user_actions';
 import { useDispatch } from 'react-redux';
 import { Form, Input, Button, Typography } from 'antd';
+import { InputFeedback } from '../LoginPage/LoginPage';
 const { Title } = Typography;
 
 const formItemLayout = {
@@ -108,7 +109,7 @@ function RegisterPage(props) {
                   }
                 />
                 {errors.name && touched.name && (
-                  <div className='input-feedback'>{errors.name}</div>
+                  <InputFeedback>{errors.name}</InputFeedback>
                 )}
               </Form.Item>
 
@@ -134,7 +135,7 @@ function RegisterPage(props) {
                   }
                 />
                 {errors.email && touched.email && (
-                  <div className='input-feedback'>{errors.email}</div>
+                  <InputFeedback>{errors.email}</InputFeedback>
                 )}
               </Form.Item>
 
@@ -160,7 +161,7 @@ function RegisterPage(props) {
                   }
                 />
                 {errors.password && touched.password && (
-                  <div className='input-feedback'>{errors.password}</div>
+                  <InputFeedback>{errors.password}</InputFeedback>
                 )}
               </Form.Item>
 
@@ -179,7 +180,7 @@ function RegisterPage(props) {
                   }
                 />
                 {errors.confirmPassword && touched.confirmPassword && (
-                  <div className='input-feedback'>{errors.confirmPassword}</div>
+                  <InputFeedback>{errors.confirmPassword}</InputFeedback>
                 )}
               </Form.Item>
 

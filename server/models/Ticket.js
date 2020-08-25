@@ -1,25 +1,23 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ticketSchema = mongoose.Schema(
-  {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-    key: {
-      type: String,
-      maxlength: 90,
-    },
-    name: {
-      type: String,
-      maxlength: 50,
-    },
-    url: String,
-    section: Number,
+const ticketSchema = mongoose.Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
   },
-  { timestamps: true }
-);
+  key: {
+    type: String,
+    maxlength: 90,
+  },
+  name: {
+    type: String,
+    maxlength: 50,
+  },
+  url: String,
+  section: Number,
+  date: String,
+});
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
 

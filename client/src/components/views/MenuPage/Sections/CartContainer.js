@@ -1,37 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
 import { Button } from 'antd';
 import { sectionName } from '../../LandingPage/LandingPage';
 import { SERVER } from '../../../Config.js';
 
-const sidebar = {
-  open: (height = 1000) => ({
-    clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
-    transition: {
-      type: 'spring',
-      stiffness: 20,
-      restDelta: 1,
-    },
-  }),
-  closed: () => ({
-    clipPath: 'circle(0px at 40px 40px)',
-    transition: {
-      type: 'spring',
-      stiffness: 400,
-      damping: 40,
-    },
-  }),
-};
-
-const CartList = styled(motion.div)`
-  float: right;
+const CartList = styled.div`
+  display: ${(props) => (props.open ? 'block' : 'none')};
+  transition: 0.2s;
   margin: 0;
-  width: 330px;
+  border-radius: 5px;
+  width: 450px;
   height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: grey;
+  overflow: hidden;
+  background-color: #a3e7d6;
+  @media (max-width: 767px) {
+    margin: auto;
+    width: calc(100% - 16px);
+    max-width: 450px;
+  }
 `;
 
 const SectionTag = styled.div`
@@ -54,19 +40,19 @@ const Item = styled.li`
   margin: 20px 10px;
   display: flex;
   align-items: center;
-`;
-
-const Icon = styled.div`
-  border: 5px;
-  overflow: hidden;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
+  &:after {
+    height: 1px;
+    width: 100%;
+    background-color: grey;
+  }
 `;
 
 const Img = styled.img`
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
   height: 100%;
+  border-radius: 50%;
 `;
 
 const Text = styled.div`
@@ -94,7 +80,12 @@ const CartInfo = styled.div`
 `;
 
 const BuyBtn = styled(Button)`
-  width: 100%;
+  width: calc(100% - 20px);
+  border-radius: 4px !important;
+  border-color: red !important;
+  background-color: red !important;
+  color: white !important;
+  margin: 10px !important;
 `;
 
 function CartContainer({
@@ -107,16 +98,14 @@ function CartContainer({
   onRemove,
 }) {
   return (
-    <CartList variants={sidebar} animate={Price > 0 ? 'open' : 'closed'}>
+    <CartList open={Price > 0 ? true : false}>
       <SectionTag>{sectionName[section - 1]}</SectionTag>
       <List>
         {Menu.map((menu, idx) => {
           if (menu.cnt > 0)
             return (
               <Item>
-                <Icon>
-                  <Img src={`${SERVER}/${menu.url}`} alt={menu.name} />
-                </Icon>
+                <Img src={`${SERVER}/${menu.url}`} alt={menu.name} />
                 <Text>{menu.name}</Text>
                 <PriceCnt>{`${menu.price} x ${menu.cnt}`}</PriceCnt>
                 <Button size='small' onClick={onClick} value={idx}>
@@ -126,10 +115,11 @@ function CartContainer({
                   ∨
                 </Button>
                 <Button size='small' onClick={onRemove} value={idx}>
-                  X
+                  x
                 </Button>
               </Item>
             );
+          else return null;
         })}
       </List>
       <CartInfo>

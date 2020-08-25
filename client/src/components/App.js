@@ -32,15 +32,16 @@ function App() {
             />
             <Route
               exact
-              path='/menuUploads'
-              component={Auth(MenuUploadPage, true, true)}
-            />
-            <Route
-              exact
               path='/section/:section'
               component={Auth(MenuPage, null)}
             />
             <Route exact path='/ticket' component={Auth(TicketPage, true)} />
+
+            <Route
+              exact
+              path='/menuUploads'
+              component={Auth(MenuUploadPage, true, true)}
+            />
             <Route
               exact
               path='/qr_reader'

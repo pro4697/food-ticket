@@ -1,8 +1,32 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import QrReader from 'react-qr-reader';
 import { List } from 'antd';
 import { SERVER } from '../../Config.js';
+
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+`;
+
+const QrContainer = styled(QrReader)`
+  display: flex;
+  margin: auto;
+  width: 500px;
+`;
+
+const Li = styled(List)`
+  display: flex;
+  margin: 0;
+  background-color: grey;
+  & .ant-list-item {
+    display: flex;
+    font-size: 24px;
+    margin: auto;
+  }
+`;
 
 function QrReaderPage() {
   const [Name, setName] = useState([]);
@@ -36,29 +60,17 @@ function QrReaderPage() {
   };
 
   return (
-    <div style={{ display: 'flex', width: '100%', height: '100%' }}>
-      <QrReader
-        delay={300}
-        onError={handleError}
-        onScan={handleScan}
-        style={{ display: 'flex', margin: '0', width: '500px' }}
-      />
-      <List
+    <Container>
+      <QrContainer delay={300} onError={handleError} onScan={handleScan} />
+      <Li
         itemLayout='horizontal'
         bordered
         dataSource={Name}
         renderItem={(item) => (
-          <List.Item style={{ fontSize: '24px', color: item.color }}>
-            {item.msg}
-          </List.Item>
+          <List.Item style={{ color: item.color }}>{item.msg}</List.Item>
         )}
-        style={{
-          display: 'flex',
-          margin: '0',
-          backgroundColor: 'grey',
-        }}
       />
-    </div>
+    </Container>
   );
 }
 

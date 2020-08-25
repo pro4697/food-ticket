@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import styled from 'styled-components';
 import { loginUser, registerUser } from '../../../_actions/user_actions';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -10,6 +11,18 @@ import KakaoBtn from '../KakaoBtn/KakaoBtn';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
+
+export const InputFeedback = styled.div`
+  color: red;
+`;
+
+const FormErrorMessage = styled.p`
+  color: #ff0000bf;
+  font-size: 0.7rem;
+  border: 1px solid;
+  padding: 1rem;
+  border-radius: 10px;
+`;
 
 function LoginPage(props) {
   const dispatch = useDispatch();
@@ -46,7 +59,8 @@ function LoginPage(props) {
           if (response.payload.loginSuccess) {
             // 로그인 성공시
             saveUserData(response.payload);
-            if (rememberMe === true) {
+            // Kakao 로그인이면 email자동저장 안함
+            if (rememberMe === true && !isKakao) {
               localStorage.setItem('rememberMe', values.email);
             } else {
               localStorage.removeItem('rememberMe');
@@ -129,102 +143,83 @@ function LoginPage(props) {
           handleBlur,
           handleSubmit,
         } = props;
+
         return (
           <div className='app'>
-            <div
-              className='formWrapper'
-              style={{ backgroundColor: 'white', padding: '2rem' }}
-            >
-              <Title level={2}>Login </Title>
-              <form onSubmit={handleSubmit} style={{ width: '350px' }}>
-                <Form.Item required>
-                  <Input
-                    id='email'
-                    prefix={<UserOutlined />}
-                    placeholder='Enter your email'
-                    type='email'
-                    value={values.email === 'undefined' ? '' : values.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.email && touched.email
-                        ? 'text-input error'
-                        : 'text-input'
-                    }
-                  />
-                  {errors.email && touched.email && (
-                    <div className='input-feedback'>{errors.email}</div>
-                  )}
-                </Form.Item>
-
-                <Form.Item required>
-                  <Input
-                    id='password'
-                    prefix={<LockOutlined />}
-                    placeholder='password.'
-                    type='password'
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.password && touched.password
-                        ? 'text-input error'
-                        : 'text-input'
-                    }
-                  />
-                  {errors.password && touched.password && (
-                    <div className='input-feedback'>{errors.password}</div>
-                  )}
-                </Form.Item>
-
-                {formErrorMessage && (
-                  <label>
-                    <p
-                      style={{
-                        color: '#ff0000bf',
-                        fontSize: '0.7rem',
-                        border: '1px solid',
-                        padding: '1rem',
-                        borderRadius: '10px',
-                      }}
-                    >
-                      {formErrorMessage}
-                    </p>
-                  </label>
+            <Title level={2}>Login</Title>
+            <Form onSubmit={handleSubmit} style={{ width: '350px' }}>
+              <Form.Item required>
+                <Input
+                  id='email'
+                  prefix={<UserOutlined />}
+                  placeholder='Enter your email'
+                  type='email'
+                  value={values.email === 'undefined' ? '' : values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={
+                    errors.email && touched.email
+                      ? 'text-input error'
+                      : 'text-input'
+                  }
+                />
+                {errors.email && touched.email && (
+                  <InputFeedback>{errors.email}</InputFeedback>
                 )}
+              </Form.Item>
 
-                <Form.Item>
-                  <Checkbox
-                    id='rememberMe'
-                    onChange={handleRememberMe}
-                    checked={rememberMe}
-                  >
-                    Remember me
-                  </Checkbox>
-                  {/* <a
+              <Form.Item required>
+                <Input
+                  id='password'
+                  prefix={<LockOutlined />}
+                  placeholder='password.'
+                  type='password'
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={
+                    errors.password && touched.password
+                      ? 'text-input error'
+                      : 'text-input'
+                  }
+                />
+                {errors.password && touched.password && (
+                  <InputFeedback>{errors.password}</InputFeedback>
+                )}
+              </Form.Item>
+
+              {formErrorMessage && (
+                <FormErrorMessage>{formErrorMessage}</FormErrorMessage>
+              )}
+
+              <Form.Item>
+                <Checkbox
+                  id='rememberMe'
+                  onChange={handleRememberMe}
+                  checked={rememberMe}
+                >
+                  Remember me
+                </Checkbox>
+                {/* <a
                     className='login-form-forgot'
                     href='/reset_password'
                     style={{ float: 'right' }}
                   >
                     forgot password
                   </a> */}
-                  <div>
-                    <Button
-                      type='primary'
-                      htmlType='submit'
-                      className='login-form-button'
-                      style={{ minWidth: '100%' }}
-                      disabled={isSubmitting}
-                      onSubmit={handleSubmit}
-                    >
-                      Log in
-                    </Button>
-                    <KakaoBtn loginAction={loginAction} />
-                  </div>
-                  Or <a href='/register'>register now!</a>
-                </Form.Item>
-              </form>
-            </div>
+                <Button
+                  type='primary'
+                  style={{ minWidth: '100%' }}
+                  disabled={isSubmitting}
+                  onClick={handleSubmit}
+                >
+                  Log in
+                </Button>
+                <br />
+                <KakaoBtn loginAction={loginAction} />
+                Or <a href='/register'>register now!</a>
+              </Form.Item>
+            </Form>
           </div>
         );
       }}

@@ -1,14 +1,21 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { useSelector } from 'react-redux';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Row, Col } from 'antd';
 
 const App = styled.div`
   flex-direction: column;
+  padding-top: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 700px;
   max-width: 1600px;
   margin: auto;
+  @media (max-width: 767px) {
+    padding-top: 1rem;
+  }
 `;
 
 const Title = styled.div`
@@ -16,42 +23,51 @@ const Title = styled.div`
   margin-bottom: 50px;
 `;
 
-const CardContainer = styled.div`
+const CardContainer = styled(Row)`
   width: 100%;
+`;
+const Img = styled.img`
   display: flex;
-  justify-content: space-between;
+  width: 100%;
+  border-radius: 4px;
 `;
 
-const Card = styled.a`
-  position: relative;
+const A = styled.a`
   display: flex;
-  margin: auto;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
   align-items: center;
-  justify-content: center;
-  transition: 0.15s;
-  height: 27vw;
-  &:hover {
-    transition: 0.2s;
-    transform: scale(1.15);
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  transition: 0.2s;
+`;
+
+const Card = styled(Col)`
+  position: relative !important;
+  &:hover ${A} {
+    letter-spacing: 2px;
+    border: 30px solid transparent;
+    transition: 0.2s !important;
+    transform: scale(1.08) !important;
   }
 `;
 
-const Img = styled.img`
-  border-radius: 5px;
-  height: 100%;
-`;
-
 const CardTitle = styled.span`
-  transition: 0.2s;
-  position: absolute;
-  bottom: 0px;
-  color: white;
+  display: block;
+  z-index: 1;
+  color: black;
   font-size: 24px;
   text-align: center;
-  text-decoration: none;
-  ${Card}:hover & {
-    transition: 0.2s;
-    bottom: 200px;
+  transition: order 0.5s;
+  @media (max-width: 1200px) {
+    font-size: 20px;
+  }
+  @media (max-width: 992px) {
+    font-size: 18px;
+  }
+  @media (max-width: 767px) {
+    font-size: 16px;
   }
 `;
 
@@ -64,15 +80,30 @@ export const sectionName = [
 
 function LandingPage() {
   const isSection = (idx) => (idx < 4 ? `/section/${idx}` : '/ticket');
-
+  const user = useSelector((state) => state.user);
   return (
     <App>
-      <Title>모바일 식권 시스템</Title>
-      <CardContainer>
+      <Title>
+        {user.userData !== undefined ? (
+          `${user.userData.name}님 환영합니다`
+        ) : (
+          <LoadingOutlined />
+        )}
+      </Title>
+      <CardContainer gutter={[32, 32]}>
         {sectionName.map((section, idx) => (
-          <Card href={isSection(idx + 1)} key={idx}>
-            <Img src={`/images/${idx + 1}.jpg`} alt={sectionName[idx]} />
-            <CardTitle>{section}</CardTitle>
+          <Card md={6} sm={12} xs={12} key={idx}>
+            <A href={isSection(idx + 1)} key={idx}>
+              <Img
+                src={`/images/${idx + 1}.jpg`}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = `/images/${idx + 1}.png`;
+                }}
+                alt={sectionName[idx]}
+              />
+              <CardTitle>{section}</CardTitle>
+            </A>
           </Card>
         ))}
       </CardContainer>

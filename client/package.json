@@ -4,10 +4,10 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
-    "antd": "^3.24.1",
+    "antd": "^4.5.4",
     "axios": "^0.18.0",
     "bootpay-js": "^3.2.6",
-    "formik": "^1.5.8",
+    "formik": "^2.1.5",
     "framer-motion": "^2.3.0",
     "highlight.js": "^9.17.1",
     "immutable": "^4.0.0-rc.12",

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import BootPay from 'bootpay-js';
@@ -6,6 +7,17 @@ import { SERVER } from '../../Config.js';
 
 import MenuContainer from './Sections/MenuContainer';
 import CartContainer from './Sections/CartContainer';
+
+const App = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 700px;
+  @media (max-width: 992px) {
+    flex-direction: column;
+  }
+`;
 
 function MenuPage(props) {
   const section = props.match.params.section;
@@ -64,13 +76,14 @@ function MenuPage(props) {
   };
 
   const onSubmit = async () => {
-    //////////////////////////////////// 페이지 이동 제대로 안됨
     if (!user.userData.isAuth) {
       alert('회원가입이 필요한 서비스입니다.');
-      window.location.href = '/login';
+      props.history.push('/login');
+      return;
     }
+
     let variable = { _id: user.userData._id, Cart: [] };
-    Menu.map((menu) => {
+    Menu.forEach((menu) => {
       if (menu.cnt > 0) {
         variable.Cart.push(menu);
       }
@@ -81,10 +94,8 @@ function MenuPage(props) {
         alert('식권 구매후 저장 오류');
       }
     });
-    props.history.push('/');
+    props.history.push('/ticket');
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////
-    // auth 체크후 비로그인이면 로그인 페이지로 튕구기
     // BootPay.request({
     //   price: Price, // 결제할 금액
     //   application_id: '5cc7f458396fa6771abd07a8',
@@ -115,13 +126,13 @@ function MenuPage(props) {
     //           alert('식권 구매후 저장 오류');
     //         }
     //       });
-    //     props.history.push('/');
+    //     props.history.push('/ticket');
     //   });
   };
 
   if (Menu.length !== 0) {
     return (
-      <div className='app row'>
+      <App>
         <MenuContainer Menu={Menu} onClick={onClick} />
         <CartContainer
           Menu={Menu}
@@ -132,7 +143,7 @@ function MenuPage(props) {
           onRemove={onRemove}
           onSubmit={onSubmit}
         />
-      </div>
+      </App>
     );
   } else {
     return null;
