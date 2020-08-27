@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
+import {
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+  CloseOutlined,
+} from '@ant-design/icons';
 import { sectionName } from '../../LandingPage/LandingPage';
 import { SERVER } from '../../../Config.js';
 
@@ -113,13 +118,13 @@ function CartContainer({
                 <Text>{menu.name}</Text>
                 <PriceCnt>{`${menu.price} x ${menu.cnt}`}</PriceCnt>
                 <Button size='small' onClick={onClick} value={idx}>
-                  ∧
+                  <ArrowUpOutlined />
                 </Button>
                 <Button size='small' onClick={onDown} value={idx}>
-                  ∨
+                  <ArrowDownOutlined />
                 </Button>
                 <Button size='small' onClick={onRemove} value={idx}>
-                  x
+                  <CloseOutlined />
                 </Button>
               </Item>
             );

@@ -16,6 +16,8 @@ const App = styled.div`
   min-height: 700px;
   @media (max-width: 992px) {
     flex-direction: column;
+    margin-top: 10px;
+    padding: 5px;
   }
 `;
 

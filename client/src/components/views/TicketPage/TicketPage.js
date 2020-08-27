@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
-import { Row, Col, Typography } from 'antd';
-import { DropboxOutlined } from '@ant-design/icons';
-import { SERVER } from '../../Config.js';
-import { Modal, Button } from 'antd';
-import { sectionName } from '../LandingPage/LandingPage';
 import QRCode from 'qrcode.react';
+import styled, { keyframes } from 'styled-components';
+import { Row, Col, Typography, Modal, Button } from 'antd';
+import { DropboxOutlined, LoadingOutlined } from '@ant-design/icons';
+import { SERVER } from '../../Config.js';
+import { sectionName, FadeIn } from '../LandingPage/LandingPage';
 
 const { Title } = Typography;
 
 const StyledRow = styled(Row)`
   width: 85%;
   height: 100%;
+  margin-top: 100px !important;
+  @media (max-width: 767px) {
+    margin-top: 30px !important;
+    margin-bottom: 40px !important;
+  }
+`;
+
+const StyledCol = styled(Col)`
+  -webkit-animation: ${FadeIn} 0.3s ease;
+  -moz-animation: ${FadeIn} 0.3s ease;
+  -ms-animation: ${FadeIn} 0.3s ease;
+  -o-animation: ${FadeIn} 0.3s ease;
+  animation: ${FadeIn} 0.3s ease;
 `;
 
 const Item = styled(Button)`
@@ -24,6 +36,8 @@ const Item = styled(Button)`
   border-radius: 5px !important;
   width: 100% !important;
   height: 100% !important;
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025) !important;
   &:hover,
   &:focus {
     border-color: ${(props) => props.color} !important;
@@ -34,14 +48,23 @@ const Item = styled(Button)`
 
 const ItemInfo = styled.span`
   display: flex;
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 2px;
+  @media (max-width: 1200px) {
+    font-size: 16px;
+  }
+  @media (max-width: 992px) {
+    font-size: 14px;
+  }
+  @media (max-width: 767px) {
+    font-size: 12px;
+  }
 `;
 
 const Img = styled.img`
   display: flex;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 5px;
   margin-top: 2px;
   margin-bottom: 2px;
 `;
@@ -68,6 +91,7 @@ function TicketPage() {
   const user = useSelector((state) => state.user);
   const [Ticket, setTicket] = useState([]);
   const [Visible, setVisible] = useState(false);
+  const [Loading, setLoading] = useState(false);
   const [PopupData, setPopupData] = useState([]);
 
   useEffect(() => {
@@ -79,6 +103,7 @@ function TicketPage() {
         .then((response) => {
           if (response.data.success) {
             setTicket(response.data.result);
+            setLoading(true);
           } else {
             alert('식권 정보 불러오기 실패');
           }
@@ -92,12 +117,12 @@ function TicketPage() {
     setVisible(true);
   };
 
-  if (Ticket && Ticket.length > 0) {
+  if (Loading && Ticket.length > 0) {
     return (
       <div className='app'>
         <StyledRow gutter={[16, 16]} justify='center'>
           {Ticket.map((ticket, idx) => (
-            <Col lg={4} md={6} sm={8} xs={12} key={idx}>
+            <StyledCol lg={4} md={6} sm={8} xs={12} key={idx}>
               <Item
                 onClick={onClick}
                 value={idx}
@@ -111,7 +136,7 @@ function TicketPage() {
                 />
                 <ItemInfo>{ticket.name}</ItemInfo>
               </Item>
-            </Col>
+            </StyledCol>
           ))}
         </StyledRow>
         <Modal
@@ -134,8 +159,13 @@ function TicketPage() {
   } else {
     return (
       <div className='app'>
-        <BoxIcon />
-        <Title level={2}>보유한 식권이 없습니다.</Title>
+        {Loading && (
+          <>
+            <BoxIcon />
+            <Title level={2}>보유한 식권이 없습니다.</Title>
+          </>
+        )}
+        {!Loading && <LoadingOutlined style={{ fontSize: '55px' }} />}
       </div>
     );
   }

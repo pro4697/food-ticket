@@ -41,12 +41,6 @@ pre {
   flex-direction: row;
 }
 
-.wrapper {
-  width: 100%;
-  height: auto;
-  min-height: 100vh;
-}
-
 .contentsWrap {
   position: relative;
   /* max-width: 1400px; */
@@ -61,7 +55,10 @@ pre {
   display: block;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
+  .contentsWrap {
+    padding: 0;
+  }
   .contentsWrapSpacer {
     height: 50px;
     display: block;

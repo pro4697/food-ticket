@@ -5,7 +5,7 @@ import LeftMenu from './Sections/LeftMenu';
 import RightMenu from './Sections/RightMenu';
 import { Drawer, Button } from 'antd';
 import useReactRouter from 'use-react-router';
-import { BarsOutlined } from '@ant-design/icons';
+import { MenuOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 const NavMenu = styled.nav`
@@ -17,6 +17,11 @@ const NavMenu = styled.nav`
   overflow: hidden;
   box-shadow: 0 0 30px #f3f1f1;
   background-color: white;
+  @media (max-width: 767px) {
+    box-shadow: 0 0 0 !important;
+    border-bottom: 0 !important;
+    background-color: #1890ff;
+  }
 `;
 
 const Logo = styled.div`
@@ -31,6 +36,7 @@ const Logo = styled.div`
     margin-left: -20px;
     a {
       padding: 10px 20px;
+      color: white !important;
     }
   }
 `;
@@ -79,10 +85,13 @@ const MobileBtn = styled(Button)`
   /* use of important to overwrite ant-btn */
   float: right;
   height: 32px;
-  padding: 0px 6px !important;
-  border-radius: 4px !important;
-  margin-top: 8px;
+  padding: 0 !important;
+  border: 0 !important;
+  margin-top: 10px;
   display: none !important;
+  background-color: #1890ff !important;
+  color: white !important;
+  font-size: 20px !important;
   @media (max-width: 767px) {
     display: inline-block !important;
   }
@@ -124,7 +133,7 @@ function NavBar() {
           <RightMenu mode='horizontal' pathname={pathname} />
         </RightContainer>
         <MobileBtn onClick={showDrawer}>
-          <BarsOutlined />
+          <MenuOutlined />
         </MobileBtn>
         <MenuDrawer
           title={user !== undefined ? user.name : null}

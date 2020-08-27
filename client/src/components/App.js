@@ -13,43 +13,35 @@ import TicketPage from './views/TicketPage/TicketPage.js';
 import QrReaderPage from './views/QrReaderPage/QrReaderPage.js';
 
 import NavBar from './views/NavBar/NavBar';
-// import Footer from './views/Footer/Footer';
 
 function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div className='wrapper'>
-        <NavBar />
-        <div className='contentsWrapSpacer' />
-        <div className='contentsWrap'>
-          <Switch>
-            <Route exact path='/' component={Auth(LandingPage, null)} />
-            <Route exact path='/login' component={Auth(LoginPage, false)} />
-            <Route
-              exact
-              path='/register'
-              component={Auth(RegisterPage, null)}
-            />
-            <Route
-              exact
-              path='/section/:section'
-              component={Auth(MenuPage, null)}
-            />
-            <Route exact path='/ticket' component={Auth(TicketPage, true)} />
+      <NavBar />
+      <div className='contentsWrapSpacer' />
+      <div className='contentsWrap'>
+        <Switch>
+          <Route exact path='/' component={Auth(LandingPage, null)} />
+          <Route exact path='/login' component={Auth(LoginPage, false)} />
+          <Route exact path='/register' component={Auth(RegisterPage, null)} />
+          <Route
+            exact
+            path='/section/:section'
+            component={Auth(MenuPage, null)}
+          />
+          <Route exact path='/ticket' component={Auth(TicketPage, true)} />
 
-            <Route
-              exact
-              path='/menuUploads'
-              component={Auth(MenuUploadPage, true, true)}
-            />
-            <Route
-              exact
-              path='/qr_reader'
-              component={Auth(QrReaderPage, true, true)}
-            />
-          </Switch>
-        </div>
-        {/* <Footer /> */}
+          <Route
+            exact
+            path='/menuUploads'
+            component={Auth(MenuUploadPage, true, true)}
+          />
+          <Route
+            exact
+            path='/qr_reader'
+            component={Auth(QrReaderPage, true, true)}
+          />
+        </Switch>
       </div>
     </Suspense>
   );
