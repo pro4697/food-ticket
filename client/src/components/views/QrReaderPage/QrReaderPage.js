@@ -29,16 +29,19 @@ const StyledList = styled(List)`
   display: flex;
   margin: 0;
   background-color: grey;
-  & .ant-list-item {
-    display: flex;
-    font-size: 24px;
-    margin: auto;
+  & .ant-spin-nested-loading {
+    width: 100% !important;
   }
 `;
 
 const Item = styled(List.Item)`
+  display: flex !important;
+  margin: auto !important;
   font-size: 30px !important;
+  width: 100% !important;
+  text-align: center !important;
   color: ${(props) => props.color} !important;
+
   @media (max-width: 1200px) {
     font-size: 20px !important;
   }

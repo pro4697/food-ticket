@@ -5,6 +5,7 @@ import QRCode from 'qrcode.react';
 import styled, { keyframes } from 'styled-components';
 import { Row, Col, Typography, Modal, Button } from 'antd';
 import { DropboxOutlined, LoadingOutlined } from '@ant-design/icons';
+import { StyledApp } from '../../App';
 import { SERVER } from '../../Config.js';
 import { sectionName, FadeIn } from '../LandingPage/LandingPage';
 
@@ -159,7 +160,7 @@ function TicketPage() {
 
   if (Loading && Ticket.length > 0) {
     return (
-      <div className='app'>
+      <StyledApp>
         {console.log('render')}
         <StyledRow gutter={[16, 16]} justify='center'>
           {Ticket.map((ticket, idx) => (
@@ -207,11 +208,11 @@ function TicketPage() {
           <br />
           <div style={{ textAlign: 'center' }}>{PopupData.date}</div>
         </Modal>
-      </div>
+      </StyledApp>
     );
   } else {
     return (
-      <div className='app'>
+      <StyledApp>
         {Loading && (
           <>
             <BoxIcon />
@@ -219,7 +220,7 @@ function TicketPage() {
           </>
         )}
         {!Loading && <LoadingOutlined style={{ fontSize: '55px' }} />}
-      </div>
+      </StyledApp>
     );
   }
 }

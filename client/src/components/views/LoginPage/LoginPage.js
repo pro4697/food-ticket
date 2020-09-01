@@ -8,6 +8,7 @@ import { Form, Input, Button, Checkbox, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
 import { headersConfig } from '../../Config';
 import KakaoBtn from '../KakaoBtn/KakaoBtn';
+import { StyledApp } from '../../App';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
@@ -150,7 +151,7 @@ function LoginPage(props) {
         } = props;
 
         return (
-          <div className='app'>
+          <StyledApp>
             <Title level={2}>Login</Title>
             <Form onSubmit={handleSubmit} style={{ width: '350px' }}>
               <Form.Item required>
@@ -224,7 +225,7 @@ function LoginPage(props) {
                 Or <a href='/register'>register now!</a>
               </Form.Item>
             </Form>
-          </div>
+          </StyledApp>
         );
       }}
     </Formik>

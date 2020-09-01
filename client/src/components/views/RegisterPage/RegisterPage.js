@@ -1,10 +1,12 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from '../../../_actions/user_actions';
 import { useDispatch } from 'react-redux';
 import { Form, Input, Button, Typography } from 'antd';
 import { InputFeedback } from '../LoginPage/LoginPage';
+import { StyledApp } from '../../App';
 const { Title } = Typography;
 
 const formItemLayout = {
@@ -86,9 +88,8 @@ function RegisterPage(props) {
           handleSubmit,
         } = props;
         return (
-          <div className='app'>
+          <StyledApp>
             <Title level={2}>Sign up </Title>
-
             <Form
               style={{ minWidth: '375px' }}
               {...formItemLayout}
@@ -194,7 +195,7 @@ function RegisterPage(props) {
                 </Button>
               </Form.Item>
             </Form>
-          </div>
+          </StyledApp>
         );
       }}
     </Formik>
