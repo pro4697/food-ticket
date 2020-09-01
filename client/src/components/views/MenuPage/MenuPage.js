@@ -14,7 +14,7 @@ const App = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 700px;
-  @media (max-width: 992px) {
+  @media (max-width: 1200px) {
     flex-direction: column;
     margin-top: 10px;
     padding: 5px;

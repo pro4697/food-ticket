@@ -10,6 +10,32 @@ const config = require('./config/key');
 
 const app = express();
 
+const https = require('https');
+const fs = require('fs');
+const { Http2ServerRequest } = require('http2');
+
+//Certificates
+const privateKey = fs.readFileSync(
+  '/etc/letsencrypt/live/foodticket.xyz/privkey.pem',
+  'utf8'
+);
+const certificate = fs.readFileSync(
+  '/etc/letsencrypt/live/foodticket.xyz/cert.pem',
+  'utf8'
+);
+const ca = fs.readFileSync(
+  '/etc/letsencrypt/live/foodticket.xyz/chain.pem',
+  'utf8'
+);
+
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca: ca,
+};
+
+const https_server = https.createServer(credentials, app);
+
 mongoose
   .connect(config.mongoURI, {
     useNewUrlParser: true,
@@ -56,8 +82,13 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const port = process.env.PORT || 5000;
+// const port = process.env.PORT || 5000;
+// app.listen(port, () => {
+//   console.log(`Server Running at ${port}`);
+// });
 
-app.listen(port, () => {
-  console.log(`Server Running at ${port}`);
+const port = process.env.PORT || 8443;
+
+https_server.listen(port, () => {
+  console.log('https server Running at 8443');
 });

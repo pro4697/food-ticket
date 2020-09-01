@@ -2,7 +2,7 @@
   "name": "Food-Ticket",
   "version": "1.0.0",
   "description": "Basic implementation",
-  "main": "index.js",
+  "main": "server/index.js",
   "engine": {
     "node": "10.16.0",
     "npm": "6.9.0"

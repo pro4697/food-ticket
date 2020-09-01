@@ -48,13 +48,10 @@ const Item = styled(Button)`
 
 const ItemInfo = styled.span`
   display: flex;
-  font-size: 16px;
+  font-size: 14px;
   letter-spacing: 2px;
-  @media (max-width: 1200px) {
-    font-size: 16px;
-  }
   @media (max-width: 992px) {
-    font-size: 14px;
+    font-size: 13px;
   }
   @media (max-width: 767px) {
     font-size: 12px;
@@ -93,6 +90,8 @@ function TicketPage() {
   const [Visible, setVisible] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [PopupData, setPopupData] = useState([]);
+  const [IntervalId, setIntervalId] = useState(null);
+  let isVisible = false;
 
   useEffect(() => {
     if (typeof user.userData !== 'undefined') {
@@ -111,15 +110,57 @@ function TicketPage() {
     }
   }, [user.userData]);
 
+  //많은 사용자가 이용시 서버에 부하를 줄수있는 1순위 함수
+  const _useCheck = (_key) => {
+    setIntervalId(
+      setInterval(() => {
+        console.log('checking...');
+        if (isVisible) {
+          axios
+            .post(`${SERVER}/api/ticket/isTicket`, {
+              key: _key,
+            })
+            .then((response) => {
+              if (response.data.success) {
+                console.log('ture' + Visible);
+              } else {
+                console.log('false');
+                setVisible(false);
+                clearInterval(IntervalId);
+                setIntervalId(null);
+              }
+            });
+        } else {
+          isVisible = false;
+          setVisible(false);
+          clearInterval(IntervalId);
+          setIntervalId(null);
+        }
+      }, 2500)
+    );
+
+    setTimeout(() => {
+      if (IntervalId) {
+        setVisible(false);
+        clearInterval(IntervalId);
+        setIntervalId(null);
+      }
+      console.log('강제 종료 1');
+    }, 10000);
+  };
+
   const onClick = (e) => {
     // key 길이는 88
     setPopupData(Ticket[e.currentTarget.value]);
     setVisible(true);
+    isVisible = true;
+    _useCheck(Ticket[e.currentTarget.value].key);
   };
 
   if (Loading && Ticket.length > 0) {
     return (
       <div className='app'>
+        {console.log('render')}
         <StyledRow gutter={[16, 16]} justify='center'>
           {Ticket.map((ticket, idx) => (
             <StyledCol lg={4} md={6} sm={8} xs={12} key={idx}>
@@ -143,9 +184,21 @@ function TicketPage() {
           title={`${PopupData.name} / ${sectionName[PopupData.section - 1]}`}
           centered
           visible={Visible}
-          onCancel={() => setVisible(false)}
+          onCancel={() => {
+            isVisible = false;
+            setVisible(false);
+            clearInterval(IntervalId);
+          }}
           footer={[
-            <Button type='primary' onClick={() => setVisible(false)} key='ok'>
+            <Button
+              type='primary'
+              onClick={() => {
+                isVisible = false;
+                setVisible(false);
+                clearInterval(IntervalId);
+              }}
+              key='ok'
+            >
               OK
             </Button>,
           ]}

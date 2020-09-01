@@ -7,17 +7,25 @@ import { SERVER } from '../../Config.js';
 
 const Container = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   width: 100%;
   height: 100%;
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
 `;
 
 const QrContainer = styled(QrReader)`
   display: flex;
   margin: auto;
-  width: 500px;
+  width: 40%;
+  @media (max-width: 767px) {
+    width: 80%;
+  }
 `;
 
-const Li = styled(List)`
+const StyledList = styled(List)`
   display: flex;
   margin: 0;
   background-color: grey;
@@ -25,6 +33,17 @@ const Li = styled(List)`
     display: flex;
     font-size: 24px;
     margin: auto;
+  }
+`;
+
+const Item = styled(List.Item)`
+  font-size: 30px !important;
+  color: ${(props) => props.color} !important;
+  @media (max-width: 1200px) {
+    font-size: 20px !important;
+  }
+  @media (max-width: 767px) {
+    font-size: 14px !important;
   }
 `;
 
@@ -37,7 +56,7 @@ function QrReaderPage() {
     if (data) {
       //이상한 값이 들어오면 예외처리 해야함///////////////////////////// ex-> 1234aa
       let tmp = data.split(' ');
-      if (tmp[1].length === 88) {
+      if (tmp[1] && tmp[1].length === 88) {
         axios
           .post(`${SERVER}/api/ticket/useTicket`, { key: tmp[1] })
           .then((response) => {
@@ -61,14 +80,12 @@ function QrReaderPage() {
 
   return (
     <Container>
-      <QrContainer delay={300} onError={handleError} onScan={handleScan} />
-      <Li
+      <QrContainer delay={1500} onError={handleError} onScan={handleScan} />
+      <StyledList
         itemLayout='horizontal'
         bordered
         dataSource={Name}
-        renderItem={(item) => (
-          <List.Item style={{ color: item.color }}>{item.msg}</List.Item>
-        )}
+        renderItem={(item) => <Item color={item.color}>{item.msg}</Item>}
       />
     </Container>
   );

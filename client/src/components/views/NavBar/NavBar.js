@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import LeftMenu from './Sections/LeftMenu';
 import RightMenu from './Sections/RightMenu';
 import { Drawer, Button } from 'antd';
 import useReactRouter from 'use-react-router';
-import { MenuOutlined } from '@ant-design/icons';
+import { MenuOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { sectionName } from '../LandingPage/LandingPage';
 import 'antd/dist/antd.css';
 
 const NavMenu = styled.nav`
@@ -33,11 +34,48 @@ const Logo = styled.div`
     padding: 15px 20px 20px 20px;
   }
   @media (max-width: 767px) {
+    display: ${(props) => (props.visible ? 'block' : 'none')};
     margin-left: -20px;
     a {
       padding: 10px 20px;
       color: white !important;
     }
+  }
+`;
+
+const BackButton = styled.div`
+  display: none;
+  width: 30px;
+  float: left;
+  a {
+    display: inline-block;
+    font-size: 20px;
+    padding: 15px 20px 20px 20px;
+  }
+  @media (max-width: 767px) {
+    display: ${(props) => (props.visible ? 'block' : 'none')};
+    margin-left: -20px;
+    a {
+      padding: 10px 20px;
+      color: white !important;
+    }
+  }
+`;
+
+const SectionTitle = styled.div`
+  display: none;
+  position: absolute;
+  color: white;
+  font-size: 20px;
+  padding: 10px 0;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+  text-align: center;
+  user-select: none;
+  letter-spacing: 2px;
+  @media (max-width: 767px) {
+    display: ${(props) => (props.visible ? 'block' : 'none')};
   }
 `;
 
@@ -60,6 +98,7 @@ const Container = styled.div`
     border-bottom: none;
   }
   @media (max-width: 767px) {
+    float: right;
     & .ant-menu-item,
     .ant-menu-submenu-title {
       padding: 1px 20px;
@@ -106,11 +145,28 @@ const MenuDrawer = styled(Drawer)`
   }
 `;
 
-function NavBar() {
+function NavBar(props) {
   const user = useSelector((state) => state.user.userData);
-  const [visible, setVisible] = useState(false);
+  const [Visible, setVisible] = useState(false);
+  const [BackBtn, setBackBtn] = useState(false);
+  const [Section, setSection] = useState('');
   const { location } = useReactRouter();
   const { pathname } = location;
+
+  useEffect(() => {
+    if (pathname === '/') {
+      setBackBtn(false);
+    } else {
+      let section = pathname.split('/');
+      console.log(section[2]);
+      if (section[1] === 'section') {
+        setSection(sectionName[section[2] - 1]);
+      } else if (section[1] === 'ticket') {
+        setSection('식권 보관함');
+      }
+      setBackBtn(true);
+    }
+  }, [pathname]);
 
   const showDrawer = () => {
     setVisible(true);
@@ -122,9 +178,15 @@ function NavBar() {
 
   return (
     <NavMenu>
-      <Logo>
+      <Logo visible={!BackBtn}>
         <a href='/'>Food Ticket</a>
       </Logo>
+      <BackButton visible={BackBtn}>
+        <a href='/'>
+          <ArrowLeftOutlined />
+        </a>
+      </BackButton>
+      <SectionTitle visible={BackBtn}>{Section}</SectionTitle>
       <Container>
         <LeftContainer>
           <LeftMenu mode='horizontal' pathname={pathname} />
@@ -140,7 +202,7 @@ function NavBar() {
           placement='right'
           closable={false}
           onClose={onClose}
-          visible={visible}
+          visible={Visible}
         >
           <LeftMenu mode='inline' />
           <RightMenu mode='inline' />

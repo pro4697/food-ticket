@@ -48,6 +48,22 @@ router.post('/getTicket', (req, res) => {
   });
 });
 
+router.post('/useTicket', (req, res) => {
+  Ticket.findOneAndDelete({ key: req.body.key }).exec((err, result) => {
+    if (err) return res.status(400).json({ success: false, err });
+    if (result) res.status(200).json({ success: true, result });
+    else res.status(200).json({ success: false });
+  });
+});
+
+router.post('/isTicket', (req, res) => {
+  Ticket.findOne({ key: req.body.key }).exec((err, result) => {
+    if (err) return res.status(400).json({ success: false, err });
+    if (result) res.status(200).json({ success: true });
+    else res.status(200).json({ success: false });
+  });
+});
+
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return ' ';
   var weekKorShortName = ['일', '월', '화', '수', '목', '금', '토'];

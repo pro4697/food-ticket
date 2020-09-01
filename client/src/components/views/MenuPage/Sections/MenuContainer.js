@@ -31,8 +31,9 @@ const Img = styled.img`
 
 const ItemInfo = styled.div`
   display: block;
+  overflow: hidden;
   position: relative;
-  border: 5px solid white;
+  border: 0;
   border-radius: 30px;
   text-align: center;
   background-color: white;
@@ -63,9 +64,15 @@ const Item = styled(Button)`
 
 const ItemTitle = styled.div`
   display: block;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   letter-spacing: 2px;
+  @media (max-width: 1200px) {
+    font-size: 13px;
+  }
+  @media (max-width: 767px) {
+    font-size: 13px;
+  }
 `;
 
 const ItemPrice = styled.div`
@@ -73,6 +80,12 @@ const ItemPrice = styled.div`
   font-size: 14px;
   letter-spacing: 2px;
   margin-left: -5px;
+  @media (max-width: 992px) {
+    font-size: 13px;
+  }
+  @media (max-width: 767px) {
+    font-size: 12px;
+  }
 `;
 
 const BgColor = ['#7ac5c5', '#9bb7d6', '#c94476', '#955251', '#f7cac9'];
@@ -82,7 +95,7 @@ function MenuContainer({ Menu, onClick }) {
   return (
     <StyledRow gutter={[32, 32]} justify='center'>
       {Menu.map((item, idx) => (
-        <StyledCol lg={4} md={6} sm={8} xs={12} key={idx}>
+        <StyledCol xl={4} lg={6} md={6} sm={8} xs={12} key={idx}>
           <Item
             onClick={onClick}
             value={idx}
