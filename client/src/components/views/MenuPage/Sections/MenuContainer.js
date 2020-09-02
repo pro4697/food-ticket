@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Row, Col, Button } from 'antd';
-import { SERVER } from '../../../Config.js';
+import { SERVER } from '../../../Config';
 import { FadeIn } from '../../LandingPage/LandingPage';
 
 const StyledRow = styled(Row)`
@@ -9,6 +9,7 @@ const StyledRow = styled(Row)`
   width: 100% !important;
   height: 100%;
   transition: 1s;
+  margin-bottom: 50px !important;
 `;
 
 const StyledCol = styled(Col)`

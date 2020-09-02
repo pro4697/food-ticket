@@ -6,7 +6,7 @@ import {
   LOGOUT_USER,
   DELETE_USER,
 } from './types';
-import { headersConfig, SERVER } from '../components/Config.js';
+import { headersConfig, SERVER } from '../components/Config';
 
 export function registerUser(dataToSubmit) {
   const request = axios

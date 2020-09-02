@@ -49,6 +49,8 @@ const CardContainer = styled(Row)`
     margin-bottom: -1px !important;
     border-radius: 30px 30px 0 0 !important;
     background-color: white;
+    box-shadow: 3px -7px 5px rgba(50, 50, 93, 0.2),
+      -3px -7px 5px rgba(50, 50, 93, 0.2);
   }
 `;
 const Img = styled.img`

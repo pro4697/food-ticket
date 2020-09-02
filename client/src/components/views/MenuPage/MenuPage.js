@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import BootPay from 'bootpay-js';
-import { SERVER } from '../../Config.js';
+import { SERVER } from '../../Config';
 
 import MenuContainer from './Sections/MenuContainer';
 import CartContainer from './Sections/CartContainer';
@@ -133,7 +133,6 @@ function MenuPage(props) {
         <CartContainer
           Menu={Menu}
           Price={Price}
-          section={section}
           onClick={onClick}
           onDown={onDown}
           onRemove={onRemove}

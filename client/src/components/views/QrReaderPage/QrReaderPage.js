@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import QrReader from 'react-qr-reader';
 import { List } from 'antd';
-import { SERVER } from '../../Config.js';
+import { SERVER } from '../../Config';
 
 const Container = styled.div`
   display: flex;

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Typography, Button, Form, message, Input, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import Dropzone from 'react-dropzone';
-import { SERVER } from '../../Config.js';
+import { SERVER } from '../../Config';
 
 const { Title } = Typography;
 

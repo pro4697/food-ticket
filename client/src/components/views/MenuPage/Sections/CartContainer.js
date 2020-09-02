@@ -6,7 +6,7 @@ import {
   ArrowDownOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
-import { SERVER } from '../../../Config.js';
+import { SERVER } from '../../../Config';
 
 const CartList = styled.div`
   display: ${(props) => (props.open ? 'block' : 'none')};
@@ -82,16 +82,17 @@ const Img = styled.img`
   border-radius: 50%;
 `;
 
-const Text = styled.div`
+const ItemName = styled.div`
   border-radius: 5px;
   width: 250px;
   height: 20px;
   flex: 1;
 `;
 
-const PriceCnt = styled.div`
+const ItemPrice = styled.div`
   margin-right: 10px;
   float: right;
+  letter-spacing: 1px;
 `;
 
 const BuyBtn = styled(Button)`
@@ -132,8 +133,8 @@ function CartContainer({ Menu, Price, onClick, onSubmit, onDown, onRemove }) {
                     draggable='false'
                     alt={menu.name}
                   />
-                  <Text>{menu.name}</Text>
-                  <PriceCnt>{`₩${menu.price} x ${menu.cnt}`}</PriceCnt>
+                  <ItemName>{menu.name}</ItemName>
+                  <ItemPrice>{`₩${menu.price} x ${menu.cnt}`}</ItemPrice>
                   <Button size='small' onClick={onClick} value={idx}>
                     <ArrowUpOutlined />
                   </Button>

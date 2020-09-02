@@ -6,7 +6,7 @@ import styled, { keyframes } from 'styled-components';
 import { Row, Col, Typography, Modal, Button } from 'antd';
 import { DropboxOutlined, LoadingOutlined } from '@ant-design/icons';
 import { StyledApp } from '../../App';
-import { SERVER } from '../../Config.js';
+import { SERVER } from '../../Config';
 import { sectionName, FadeIn } from '../LandingPage/LandingPage';
 
 const { Title } = Typography;
@@ -204,7 +204,18 @@ function TicketPage() {
             </Button>,
           ]}
         >
-          <QrCode value={PopupData.name + ' ' + PopupData.key} />
+          <QrCode
+            value={PopupData.name + ' ' + PopupData.key}
+            level={'Q'}
+            imageSettings={{
+              src: '/favicon.ico',
+              x: null,
+              y: null,
+              height: 40,
+              width: 40,
+              excavate: true,
+            }}
+          />
           <br />
           <div style={{ textAlign: 'center' }}>{PopupData.date}</div>
         </Modal>
