@@ -85,14 +85,13 @@ const BoxIcon = styled(DropboxOutlined)`
 
 const BgColor = ['#7ac5c5', '#9bb7d6', '#c94476', '#955251', '#f7cac9'];
 
-function TicketPage() {
+function TicketPage(props) {
   const user = useSelector((state) => state.user);
   const [Ticket, setTicket] = useState([]);
   const [Visible, setVisible] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [PopupData, setPopupData] = useState([]);
   const [IntervalId, setIntervalId] = useState(null);
-  let isVisible = false;
 
   useEffect(() => {
     if (typeof user.userData !== 'undefined') {
@@ -111,57 +110,45 @@ function TicketPage() {
     }
   }, [user.userData]);
 
-  //많은 사용자가 이용시 서버에 부하를 줄수있는 1순위 함수
-  const _useCheck = (_key) => {
-    setIntervalId(
-      setInterval(() => {
-        console.log('checking...');
-        if (isVisible) {
-          axios
-            .post(`${SERVER}/api/ticket/isTicket`, {
-              key: _key,
-            })
-            .then((response) => {
-              if (response.data.success) {
-                console.log('ture' + Visible);
-              } else {
-                console.log('false');
-                setVisible(false);
-                clearInterval(IntervalId);
-                setIntervalId(null);
-              }
-            });
-        } else {
-          isVisible = false;
-          setVisible(false);
-          clearInterval(IntervalId);
-          setIntervalId(null);
-        }
-      }, 2500)
-    );
-
-    setTimeout(() => {
-      if (IntervalId) {
-        setVisible(false);
-        clearInterval(IntervalId);
-        setIntervalId(null);
-      }
-      console.log('강제 종료 1');
-    }, 10000);
-  };
-
   const onClick = (e) => {
-    // key 길이는 88
     setPopupData(Ticket[e.currentTarget.value]);
     setVisible(true);
-    isVisible = true;
-    _useCheck(Ticket[e.currentTarget.value].key);
+
+    //////////////////////////////////////////////////////////////
+    //    많은 사용자가 이용시 서버에 부하를 줄수있는 1순위 코드    //
+    // *********************************************************//
+
+    // 같은 블럭내에서 setTimeout을 사용해야 하므로 해당 변수 선언
+    let thisInterval;
+
+    let key = Ticket[e.currentTarget.value].key;
+
+    setIntervalId(
+      (thisInterval = setInterval(() => {
+        axios
+          .post(`${SERVER}/api/ticket/isTicket`, { key })
+          .then((response) => {
+            // 식권 사용시 자동 닫힘
+            if (!response.data.success) {
+              setVisible(false);
+              clearInterval(thisInterval);
+              window.location.reload();
+            }
+          });
+      }, 2500))
+    );
+
+    // 자동닫기 기능은 45초간 동작
+    setTimeout(() => {
+      clearInterval(thisInterval);
+    }, 45000);
+    // *********************************************************//
+    //////////////////////////////////////////////////////////////
   };
 
   if (Loading && Ticket.length > 0) {
     return (
       <StyledApp>
-        {console.log('render')}
         <StyledRow gutter={[16, 16]} justify='center'>
           {Ticket.map((ticket, idx) => (
             <StyledCol lg={4} md={6} sm={8} xs={12} key={idx}>
@@ -186,7 +173,6 @@ function TicketPage() {
           centered
           visible={Visible}
           onCancel={() => {
-            isVisible = false;
             setVisible(false);
             clearInterval(IntervalId);
           }}
@@ -194,7 +180,6 @@ function TicketPage() {
             <Button
               type='primary'
               onClick={() => {
-                isVisible = false;
                 setVisible(false);
                 clearInterval(IntervalId);
               }}

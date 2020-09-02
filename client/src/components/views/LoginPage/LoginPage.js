@@ -92,7 +92,6 @@ function LoginPage(props) {
                       saveUserData(response.payload);
                       props.history.push('/');
                     } else {
-                      // 로그인 에서 메시지 출력
                       setFormErrorMessage(
                         'Check out your Account or Password again'
                       );

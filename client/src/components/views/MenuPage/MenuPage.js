@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { message } from 'antd';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import BootPay from 'bootpay-js';
@@ -118,11 +119,15 @@ function MenuPage(props) {
         axios
           .post(`${SERVER}/api/ticket/payment`, variable)
           .then((response) => {
-            if (!response.data.success) {
+            if (response.data.success) {
+              message.success('식권 구매 완료.');
+              setTimeout(() => {
+                props.history.push('/ticket');
+              }, 750);
+            } else {
               alert('식권 구매후 저장 오류');
             }
           });
-        props.history.push('/ticket');
       });
   };
 

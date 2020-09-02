@@ -5,13 +5,14 @@ import { Typography, Button, Form, message, Input, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import Dropzone from 'react-dropzone';
 import { SERVER } from '../../Config';
+import { sectionName } from '../LandingPage/LandingPage';
 
 const { Title } = Typography;
 
 const SectionOptions = [
-  { value: 1, label: '1F 구내식당' },
-  { value: 2, label: 'B1 구내식당' },
-  { value: 3, label: '1F Starbucks' },
+  { value: 1, label: sectionName[0] },
+  { value: 2, label: sectionName[1] },
+  { value: 3, label: sectionName[2] },
 ];
 
 const Upload = styled.div`

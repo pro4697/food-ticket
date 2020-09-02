@@ -158,7 +158,6 @@ function NavBar(props) {
       setBackBtn(false);
     } else {
       let section = pathname.split('/');
-      console.log(section[2]);
       if (section[1] === 'section') {
         setSection(sectionName[section[2] - 1]);
       } else if (section[1] === 'ticket') {

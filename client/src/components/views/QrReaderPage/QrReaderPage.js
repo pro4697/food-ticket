@@ -64,7 +64,7 @@ function QrReaderPage() {
           .post(`${SERVER}/api/ticket/useTicket`, { key: tmp[1] })
           .then((response) => {
             if (response.data.success) {
-              setName([{ color: 'black', msg: tmp[0] }, ...Name]);
+              setName([{ color: 'white', msg: tmp[0] }, ...Name]);
               successSound.play();
             } else {
               setName([

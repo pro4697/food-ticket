@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from '../../../_actions/user_actions';
