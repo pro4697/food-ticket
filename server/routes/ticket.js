@@ -1,19 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
-const clonedeep = require('lodash.clonedeep');
 const { Ticket } = require('../models/Ticket');
-
-const mongoose = require('mongoose');
 
 router.post('/payment', (req, res) => {
   // 구매완료후 DB에 식권 저장
   const TicketList = [];
   let payOrder = 0;
   let now = new Date();
-  let timeZone = new Date(
-    now.getTime() - now.getTimezoneOffset() * 60000
-  ).format('yy-MM-dd(KS) HH:mm:ss');
+  // 9시간 보정
+  let timeZone = new Date(now.getTime() + 540 * 60000).format(
+    'yy-MM-dd(KS) HH:mm:ss'
+  );
 
   req.body.Cart.map((cart) => {
     for (let i = 0; i < cart.cnt; i++) {

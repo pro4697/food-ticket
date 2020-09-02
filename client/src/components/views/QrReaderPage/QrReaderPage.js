@@ -57,8 +57,7 @@ function QrReaderPage() {
 
   const handleScan = (data) => {
     if (data) {
-      //이상한 값이 들어오면 예외처리 해야함///////////////////////////// ex-> 1234aa
-      let tmp = data.split(' ');
+      let tmp = data.split('^');
       if (tmp[1] && tmp[1].length === 88) {
         axios
           .post(`${SERVER}/api/ticket/useTicket`, { key: tmp[1] })

@@ -91,6 +91,7 @@ function TicketPage(props) {
   const [Visible, setVisible] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [PopupData, setPopupData] = useState([]);
+  const [TrashValue, setTrashValue] = useState(2);
   const [IntervalId, setIntervalId] = useState(null);
 
   useEffect(() => {
@@ -116,7 +117,7 @@ function TicketPage(props) {
 
     //////////////////////////////////////////////////////////////
     //    많은 사용자가 이용시 서버에 부하를 줄수있는 1순위 코드    //
-    // *********************************************************//
+    //////////////////////////////////////////////////////////////
 
     // 같은 블럭내에서 setTimeout을 사용해야 하므로 해당 변수 선언
     let thisInterval;
@@ -125,6 +126,7 @@ function TicketPage(props) {
 
     setIntervalId(
       (thisInterval = setInterval(() => {
+        setTrashValue(Math.floor(Math.random() * 10));
         axios
           .post(`${SERVER}/api/ticket/isTicket`, { key })
           .then((response) => {
@@ -190,8 +192,8 @@ function TicketPage(props) {
           ]}
         >
           <QrCode
-            value={PopupData.name + ' ' + PopupData.key}
-            level={'Q'}
+            value={`${PopupData.name}^${PopupData.key}^${TrashValue}`}
+            level={'M'}
             imageSettings={{
               src: '/favicon.ico',
               x: null,
@@ -202,7 +204,9 @@ function TicketPage(props) {
             }}
           />
           <br />
-          <div style={{ textAlign: 'center' }}>{PopupData.date}</div>
+          <div style={{ textAlign: 'center' }}>
+            {String(PopupData.date).slice(3, 17)}
+          </div>
         </Modal>
       </StyledApp>
     );
