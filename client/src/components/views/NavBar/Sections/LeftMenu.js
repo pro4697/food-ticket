@@ -1,15 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Menu } from 'antd';
 
 // const SubMenu = Menu.SubMenu;
 // const MenuItemGroup = Menu.ItemGroup;
 
-function LeftMenu(props) {
+function LeftMenu({ mode }) {
   const user = useSelector((state) => state.user);
 
   return (
-    <Menu mode={props.mode}>
+    <Menu mode={mode}>
       <Menu.Item key='main'>
         <a href='/'>Home</a>
       </Menu.Item>
@@ -36,5 +37,9 @@ function LeftMenu(props) {
     </Menu>
   );
 }
+
+LeftMenu.propTypes = {
+  mode: PropTypes.string.isRequired,
+};
 
 export default LeftMenu;

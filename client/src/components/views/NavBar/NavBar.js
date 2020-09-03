@@ -145,7 +145,7 @@ const MenuDrawer = styled(Drawer)`
   }
 `;
 
-function NavBar(props) {
+function NavBar() {
   const user = useSelector((state) => state.user.userData);
   const [Visible, setVisible] = useState(false);
   const [BackBtn, setBackBtn] = useState(false);

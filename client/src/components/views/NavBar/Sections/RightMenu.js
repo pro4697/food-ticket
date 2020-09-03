@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Menu } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser, deleteUser } from '../../../../_actions/user_actions';
 
-function RightMenu(props) {
+function RightMenu({ mode }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
@@ -33,7 +34,7 @@ function RightMenu(props) {
 
   if (user.userData && !user.userData.isAuth) {
     return (
-      <Menu mode={props.mode}>
+      <Menu mode={mode}>
         <Menu.Item key='mail'>
           <a href='/login'>Signin</a>
         </Menu.Item>
@@ -44,7 +45,7 @@ function RightMenu(props) {
     );
   } else {
     return (
-      <Menu mode={props.mode}>
+      <Menu mode={mode}>
         <Menu.Item key='delete'>
           <a onClick={deleteHandler}>Delete account</a>
         </Menu.Item>
@@ -55,5 +56,9 @@ function RightMenu(props) {
     );
   }
 }
+
+RightMenu.propTypes = {
+  mode: PropTypes.string.isRequired,
+};
 
 export default RightMenu;

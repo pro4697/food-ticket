@@ -13,6 +13,7 @@
     "immutable": "^4.0.0-rc.12",
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
+    "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.5",

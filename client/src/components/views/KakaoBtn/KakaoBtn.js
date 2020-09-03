@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import KaKaoLogin from 'react-kakao-login';
 
@@ -25,9 +26,6 @@ const KaKaoButton = styled(KaKaoLogin)`
   -ms-touch-action: manipulation;
   touch-action: manipulation;
   outline: 0;
-  /* &:hover {
-  box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.2);
-} */
   &:hover {
     background-color: #ffebaa;
   }
@@ -58,5 +56,9 @@ function KakaoBtn({ loginAction }) {
     />
   );
 }
+
+KakaoBtn.propTypes = {
+  loginAction: PropTypes.func.isRequired,
+};
 
 export default KakaoBtn;

@@ -85,7 +85,7 @@ const BoxIcon = styled(DropboxOutlined)`
 
 const BgColor = ['#7ac5c5', '#9bb7d6', '#c94476', '#955251', '#f7cac9'];
 
-function TicketPage(props) {
+function TicketPage() {
   const user = useSelector((state) => state.user);
   const [Ticket, setTicket] = useState([]);
   const [Visible, setVisible] = useState(false);
@@ -144,7 +144,8 @@ function TicketPage(props) {
     setTimeout(() => {
       clearInterval(thisInterval);
     }, 45000);
-    // *********************************************************//
+    //////////////////////////////////////////////////////////////
+    //                                                          //
     //////////////////////////////////////////////////////////////
   };
 

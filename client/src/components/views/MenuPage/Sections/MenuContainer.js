@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Row, Col, Button } from 'antd';
 import { SERVER } from '../../../Config';
@@ -117,5 +118,10 @@ function MenuContainer({ Menu, onClick }) {
     </StyledRow>
   );
 }
+
+MenuContainer.propTypes = {
+  Menu: PropTypes.array.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 export default MenuContainer;

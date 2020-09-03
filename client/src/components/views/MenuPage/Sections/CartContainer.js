@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import {
@@ -99,8 +100,8 @@ const BuyBtn = styled(Button)`
   width: calc(100% - 20px);
   height: 100% !important;
   border-radius: 4px !important;
-  border-color: red !important;
-  background-color: red !important;
+  border-color: #f62e3d !important;
+  background-color: #f62e3d !important;
   color: white !important;
   margin: 10px !important;
   margin-top: 3px !important;
@@ -155,5 +156,14 @@ function CartContainer({ Menu, Price, onClick, onSubmit, onDown, onRemove }) {
     </CartList>
   );
 }
+
+CartContainer.propTypes = {
+  Menu: PropTypes.array.isRequired,
+  Price: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onDown: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+};
 
 export default CartContainer;
