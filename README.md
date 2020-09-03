@@ -18,8 +18,8 @@
 -   Function component
 -   styled-components
 -   React Hook
+-   PropTypes
 -   Kakao Login
-
 -   반응형 웹으로 작성하였습니다.
 -   식권은 QRcode로 구현하였습니다.
 -   카카오페이로 테스트 결제 가능합니다.
