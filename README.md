@@ -18,6 +18,7 @@
 -   Function component
 -   styled-components
 -   React Hook
+-   Kakao Login
 
 -   반응형 웹으로 작성하였습니다.
 -   식권은 QRcode로 구현하였습니다.
