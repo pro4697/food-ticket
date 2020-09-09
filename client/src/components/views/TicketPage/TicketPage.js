@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import QRCode from 'qrcode.react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { Row, Col, Typography, Modal, Button } from 'antd';
-import { DropboxOutlined, LoadingOutlined } from '@ant-design/icons';
-import { StyledApp } from '../../App';
+import { FadeIn, StyledApp, BoxIcon, LoadingIcon } from '../../Style_Etc';
 import { SERVER } from '../../Config';
-import { sectionName, FadeIn } from '../LandingPage/LandingPage';
+import { sectionName } from '../LandingPage/LandingPage';
 
 const { Title } = Typography;
 
@@ -70,17 +69,6 @@ const Img = styled.img`
 const QrCode = styled(QRCode)`
   display: flex;
   margin: auto;
-`;
-
-const blink = keyframes`
-  from { color: inherit; }
-  to { color: #40a9ff; }
-`;
-
-const BoxIcon = styled(DropboxOutlined)`
-  font-size: 300px;
-  margin-bottom: 20px;
-  animation: ${blink} 1s 0.2s infinite alternate;
 `;
 
 const BgColor = ['#7ac5c5', '#9bb7d6', '#c94476', '#955251', '#f7cac9'];
@@ -220,7 +208,7 @@ function TicketPage() {
             <Title level={2}>보유한 식권이 없습니다.</Title>
           </>
         )}
-        {!Loading && <LoadingOutlined style={{ fontSize: '55px' }} />}
+        {!Loading && <LoadingIcon />}
       </StyledApp>
     );
   }

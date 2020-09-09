@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Row, Col, Button } from 'antd';
 import { SERVER } from '../../../Config';
-import { FadeIn } from '../../LandingPage/LandingPage';
+import { FadeIn } from '../../../Style_Etc';
 
 const StyledRow = styled(Row)`
   display: flex;

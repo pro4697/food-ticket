@@ -203,11 +203,12 @@ function NavBar() {
           placement='right'
           closable={false}
           onClose={onClose}
-          onClick={onClose}
           visible={Visible}
         >
-          <LeftMenu mode='inline' />
-          <RightMenu mode='inline' />
+          <div onClick={onClose}>
+            <LeftMenu mode='inline' />
+            <RightMenu mode='inline' />
+          </div>
         </MenuDrawer>
       </Container>
     </NavMenu>

@@ -15,7 +15,7 @@ const SectionOptions = [
   { value: 3, label: sectionName[2] },
 ];
 
-const Upload = styled.div`
+const App = styled.div`
   max-width: 320px;
   margin: 2rem auto;
   text-align: center;
@@ -123,7 +123,7 @@ function MenuUploadPage(props) {
   };
 
   return (
-    <Upload>
+    <App>
       <Title level={2}>Upload Menu</Title>
       <Form required onSubmit={onSubmit}>
         <Dropzone
@@ -165,7 +165,7 @@ function MenuUploadPage(props) {
           Submit
         </Button>
       </Form>
-    </Upload>
+    </App>
   );
 }
 

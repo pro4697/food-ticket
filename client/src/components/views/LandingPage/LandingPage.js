@@ -1,20 +1,9 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { LoadingOutlined } from '@ant-design/icons';
 import { Row, Col } from 'antd';
-
-export const FadeIn = keyframes`
-  0% {
-    opacity: 0;
-    margin-top: 30px;
-  }
-  100% {
-   opacity: 1;
-   margin-top: 0px;
- }
-`;
+import { FadeIn, LoadingIcon } from '../../Style_Etc';
 
 const App = styled.div`
   flex-direction: column;
@@ -54,6 +43,7 @@ const CardContainer = styled(Row)`
       -3px -7px 5px rgba(50, 50, 93, 0.2);
   }
 `;
+
 const Img = styled.img`
   display: flex;
   width: 100%;
@@ -84,6 +74,7 @@ const CardTitle = styled.span`
   transition: 0.2s;
   font-weight: 700;
   margin-top: 5px;
+  user-select: none;
   @media (max-width: 1200px) {
     font-size: 18px;
   }
@@ -139,7 +130,7 @@ function LandingPage() {
         {user.userData !== undefined ? (
           `${user.userData.name || 'Guest'}님 환영합니다`
         ) : (
-          <LoadingOutlined />
+          <LoadingIcon small />
         )}
       </Title>
       <CardContainer gutter={[32, 32]}>

@@ -5,7 +5,7 @@ import { registerUser } from '../../../_actions/user_actions';
 import { useDispatch } from 'react-redux';
 import { Form, Input, Button, Typography } from 'antd';
 import { InputFeedback } from '../LoginPage/LoginPage';
-import { StyledApp } from '../../App';
+import { StyledApp } from '../../Style_Etc';
 const { Title } = Typography;
 
 const formItemLayout = {

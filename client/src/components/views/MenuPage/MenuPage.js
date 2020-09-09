@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { message } from 'antd';
+import { message, Typography } from 'antd';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import BootPay from 'bootpay-js';
+import { BoxIcon, LoadingIcon } from '../../Style_Etc';
 import { SERVER } from '../../Config';
 
 import MenuContainer from './Sections/MenuContainer';
 import CartContainer from './Sections/CartContainer';
+
+const { Title } = Typography;
 
 const App = styled.div`
   display: flex;
@@ -15,9 +18,10 @@ const App = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 700px;
+  margin-top: 20px;
   @media (max-width: 1200px) {
     flex-direction: column;
-    margin-top: 10px;
+    margin-top: 15px;
     padding: 5px;
   }
 `;
@@ -29,6 +33,7 @@ function MenuPage(props) {
   const user = useSelector((state) => state.user);
   const [Menu, setMenu] = useState([]);
   const [Price, setPrice] = useState(0);
+  const [Loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -40,6 +45,7 @@ function MenuPage(props) {
             props.cnt = 0;
           });
           setMenu(response.data.result);
+          setLoading(true);
         } else {
           alert('메뉴 불러오기 실패');
         }
@@ -131,7 +137,7 @@ function MenuPage(props) {
       });
   };
 
-  if (Menu.length !== 0) {
+  if (Loading && Menu.length !== 0) {
     return (
       <App>
         <MenuContainer Menu={Menu} onClick={onClick} />
@@ -146,7 +152,17 @@ function MenuPage(props) {
       </App>
     );
   } else {
-    return null;
+    return (
+      <App>
+        {Loading && (
+          <>
+            <BoxIcon />
+            <Title level={2}>메뉴가 없습니다.</Title>
+          </>
+        )}
+        {!Loading && <LoadingIcon />}
+      </App>
+    );
   }
 }
 

@@ -5,7 +5,7 @@ import QrReader from 'react-qr-reader';
 import { List } from 'antd';
 import { SERVER } from '../../Config';
 
-const Container = styled.div`
+const App = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -81,7 +81,7 @@ function QrReaderPage() {
   };
 
   return (
-    <Container>
+    <App>
       <QrContainer delay={1500} onError={handleError} onScan={handleScan} />
       <StyledList
         itemLayout='horizontal'
@@ -89,7 +89,7 @@ function QrReaderPage() {
         dataSource={Name}
         renderItem={(item) => <Item color={item.color}>{item.msg}</Item>}
       />
-    </Container>
+    </App>
   );
 }
 

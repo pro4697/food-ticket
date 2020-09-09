@@ -8,7 +8,7 @@ import { Form, Input, Button, Checkbox, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
 import { headersConfig } from '../../Config';
 import KakaoBtn from '../KakaoBtn/KakaoBtn';
-import { StyledApp } from '../../App';
+import { StyledApp } from '../../Style_Etc';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
