@@ -203,6 +203,7 @@ function NavBar() {
           placement='right'
           closable={false}
           onClose={onClose}
+          onClick={onClose}
           visible={Visible}
         >
           <LeftMenu mode='inline' />
