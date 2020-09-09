@@ -1,4 +1,4 @@
-# Food Ticket
+# Food Ticket (2020.08)
 
 ### Preview
 -   https://foodticket.xyz/
@@ -10,6 +10,8 @@
 
 ### Library
 -   작성중...
+-   Ant Design
+-   Formik
 -   BootPay (https://www.bootpay.co.kr/)
 
 ### etc
@@ -17,7 +19,7 @@
 -   nginx
 -   Function component
 -   styled-components
--   React Hook
+-   React Hook, Redux
 -   PropTypes
 -   Kakao Login
 -   반응형 웹으로 작성하였습니다.
