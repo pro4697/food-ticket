@@ -4,7 +4,13 @@ import axios from 'axios';
 import QRCode from 'qrcode.react';
 import styled from 'styled-components';
 import { Row, Col, Typography, Modal, Button } from 'antd';
-import { FadeIn, StyledApp, BoxIcon, LoadingIcon } from '../../Style_Etc';
+import {
+  FadeIn,
+  StyledApp,
+  BoxIcon,
+  LoadingIcon,
+  BgColor,
+} from '../../Style_Etc';
 import { SERVER } from '../../Config';
 import { sectionName } from '../LandingPage/LandingPage';
 
@@ -70,8 +76,6 @@ const QrCode = styled(QRCode)`
   display: flex;
   margin: auto;
 `;
-
-const BgColor = ['#7ac5c5', '#9bb7d6', '#c94476', '#955251', '#f7cac9'];
 
 function TicketPage() {
   const user = useSelector((state) => state.user);

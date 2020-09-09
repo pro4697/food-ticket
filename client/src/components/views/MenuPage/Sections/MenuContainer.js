@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Row, Col, Button } from 'antd';
 import { SERVER } from '../../../Config';
-import { FadeIn } from '../../../Style_Etc';
+import { FadeIn, BgColor } from '../../../Style_Etc';
 
 const StyledRow = styled(Row)`
   display: flex;
@@ -89,8 +89,6 @@ const ItemPrice = styled.div`
     font-size: 12px;
   }
 `;
-
-const BgColor = ['#7ac5c5', '#9bb7d6', '#c94476', '#955251', '#f7cac9'];
 
 // xs sm md lg xl xxl
 function MenuContainer({ Menu, onClick }) {

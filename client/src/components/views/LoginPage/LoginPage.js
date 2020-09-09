@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { loginUser, registerUser } from '../../../_actions/user_actions';
 import { Formik } from 'formik';
@@ -13,7 +13,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
-export const InputFeedback = styled.div`
+const InputFeedback = styled.div`
   color: red;
 `;
 
@@ -224,4 +224,4 @@ function LoginPage(props) {
   );
 }
 
-export default withRouter(LoginPage);
+export default LoginPage;

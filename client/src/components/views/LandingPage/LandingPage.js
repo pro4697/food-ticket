@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { Row, Col } from 'antd';
@@ -130,7 +130,7 @@ function LandingPage() {
         {user.userData !== undefined ? (
           `${user.userData.name || 'Guest'}님 환영합니다`
         ) : (
-          <LoadingIcon small />
+          <LoadingIcon small={true} />
         )}
       </Title>
       <CardContainer gutter={[32, 32]}>
@@ -155,4 +155,4 @@ function LandingPage() {
   );
 }
 
-export default withRouter(LandingPage);
+export default LandingPage;
