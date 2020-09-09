@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import LeftMenu from './Sections/LeftMenu';
@@ -43,7 +44,7 @@ const Logo = styled.div`
   }
 `;
 
-const BackButton = styled.div`
+const BackBtn = styled.div`
   display: none;
   width: 30px;
   float: left;
@@ -148,14 +149,14 @@ const MenuDrawer = styled(Drawer)`
 function NavBar() {
   const user = useSelector((state) => state.user.userData);
   const [Visible, setVisible] = useState(false);
-  const [BackBtn, setBackBtn] = useState(false);
+  const [MobileUI, setMobileUI] = useState(false);
   const [Section, setSection] = useState('');
   const { location } = useReactRouter();
   const { pathname } = location;
 
   useEffect(() => {
     if (pathname === '/') {
-      setBackBtn(false);
+      setMobileUI(false);
     } else {
       let section = pathname.split('/');
       if (section[1] === 'section') {
@@ -163,7 +164,7 @@ function NavBar() {
       } else if (section[1] === 'ticket') {
         setSection('식권 보관함');
       }
-      setBackBtn(true);
+      setMobileUI(true);
     }
   }, [pathname]);
 
@@ -177,15 +178,16 @@ function NavBar() {
 
   return (
     <NavMenu>
-      <Logo visible={!BackBtn}>
+      <Logo visible={!MobileUI}>
+        {/* 임시 방편 */}
         <a href='/'>Food Ticket</a>
       </Logo>
-      <BackButton visible={BackBtn}>
-        <a href='/'>
+      <BackBtn visible={MobileUI}>
+        <Link to='/'>
           <ArrowLeftOutlined />
-        </a>
-      </BackButton>
-      <SectionTitle visible={BackBtn}>{Section}</SectionTitle>
+        </Link>
+      </BackBtn>
+      <SectionTitle visible={MobileUI}>{Section}</SectionTitle>
       <Container>
         <LeftContainer>
           <LeftMenu mode='horizontal' pathname={pathname} />

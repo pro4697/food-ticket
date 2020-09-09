@@ -90,7 +90,7 @@ function App() {
 
           <Route
             exact
-            path='/menuUploads'
+            path='/menu_uploads'
             component={Auth(MenuUploadPage, true, true)}
           />
           <Route

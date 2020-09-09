@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { loginUser, registerUser } from '../../../_actions/user_actions';
 import { Formik } from 'formik';
@@ -205,13 +205,6 @@ function LoginPage(props) {
                 >
                   Remember me
                 </Checkbox>
-                {/* <a
-                    className='login-form-forgot'
-                    href='/reset_password'
-                    style={{ float: 'right' }}
-                  >
-                    forgot password
-                  </a> */}
                 <StyledBtn
                   type='primary'
                   disabled={isSubmitting}
@@ -221,7 +214,7 @@ function LoginPage(props) {
                 </StyledBtn>
                 <br />
                 <KakaoBtn loginAction={loginAction} />
-                Or <a href='/register'>register now!</a>
+                Or <Link to='/register'>register now!</Link>
               </Form.Item>
             </Form>
           </StyledApp>

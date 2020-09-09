@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Menu } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
@@ -36,10 +37,10 @@ function RightMenu({ mode }) {
     return (
       <Menu mode={mode}>
         <Menu.Item key='mail'>
-          <a href='/login'>Signin</a>
+          <Link to='/login'>Signin</Link>
         </Menu.Item>
         <Menu.Item key='app'>
-          <a href='/register'>Signup</a>
+          <Link to='/register'>Signup</Link>
         </Menu.Item>
       </Menu>
     );

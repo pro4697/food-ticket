@@ -1,10 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Menu } from 'antd';
-
-// const SubMenu = Menu.SubMenu;
-// const MenuItemGroup = Menu.ItemGroup;
 
 function LeftMenu({ mode }) {
   const user = useSelector((state) => state.user);
@@ -12,28 +10,18 @@ function LeftMenu({ mode }) {
   return (
     <Menu mode={mode}>
       <Menu.Item key='main'>
-        <a href='/'>Home</a>
+        <Link to='/'>Home</Link>
       </Menu.Item>
       {user.userData && user.userData.role && (
         <Menu.Item key='menuUploads'>
-          <a href='/menuUploads'>Menu Uploads</a>
+          <Link to='/menu_uploads'>Menu Uploads</Link>
         </Menu.Item>
       )}
       {user.userData && user.userData.role && (
         <Menu.Item key='qrReader'>
-          <a href='/qr_reader'>QR Reader</a>
+          <Link to='/qr_reader'>QR Reader</Link>
         </Menu.Item>
       )}
-      {/* <SubMenu title={<span>Blogs</span>}>
-        <MenuItemGroup title='Item 1'>
-          <Menu.Item key='setting:1'>Option 1</Menu.Item>
-          <Menu.Item key='setting:2'>Option 2</Menu.Item>
-        </MenuItemGroup>
-        <MenuItemGroup title='Item 2'>
-          <Menu.Item key='setting:3'>Option 3</Menu.Item>
-          <Menu.Item key='setting:4'>Option 4</Menu.Item>
-        </MenuItemGroup>
-      </SubMenu> */}
     </Menu>
   );
 }

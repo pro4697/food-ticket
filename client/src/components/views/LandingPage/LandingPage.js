@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter, Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { useSelector } from 'react-redux';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -63,7 +64,7 @@ const Img = styled.img`
     0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
 `;
 
-const A = styled.a`
+const StyledLink = styled(Link)`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -102,7 +103,7 @@ const Card = styled(Col)`
   -ms-animation: ${FadeIn} 0.3s ease;
   -o-animation: ${FadeIn} 0.3s ease;
   animation: ${FadeIn} 0.3s ease;
-  &:hover ${A} {
+  &:hover ${StyledLink} {
     transition: 0.2s;
     border: 20px solid transparent;
     transform: scale(1.08) !important;
@@ -144,7 +145,7 @@ function LandingPage() {
       <CardContainer gutter={[32, 32]}>
         {sectionName.map((section, idx) => (
           <Card md={6} sm={12} xs={12} key={idx}>
-            <A href={isSection(idx + 1)} draggable='false' key={idx}>
+            <StyledLink to={isSection(idx + 1)} draggable='false' key={idx}>
               <Img
                 src={`/images/${idx + 1}.jpg`}
                 draggable='false'
@@ -155,7 +156,7 @@ function LandingPage() {
                 alt={sectionName[idx]}
               />
               <CardTitle>{section}</CardTitle>
-            </A>
+            </StyledLink>
           </Card>
         ))}
       </CardContainer>
@@ -163,4 +164,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default withRouter(LandingPage);
