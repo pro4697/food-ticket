@@ -4,9 +4,11 @@
 -   https://foodticket.xyz/
 
 ### Stack
--   MERN Stack
 -   React JS
 -   Node JS
+-   Express JS
+-   MongoDB
+-   AWS
 
 ### Library
 -   작성중...
@@ -15,7 +17,7 @@
 -   BootPay (https://www.bootpay.co.kr/)
 
 ### etc
--   AWS EC2
+-   SSL
 -   nginx
 -   Function component
 -   styled-components
