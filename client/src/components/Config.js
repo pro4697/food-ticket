@@ -8,14 +8,20 @@ const config = {
   },
 };
 
-const token = localStorage.getItem('x_token');
-const tokenExp = localStorage.getItem('x_tokenExp');
-// If token, add to headers
-if (token && tokenExp) {
-  config.headers['x_token'] = token;
-  config.headers['x_tokenExp'] = tokenExp;
-}
+export const saveToken = (props) => {
+  if (props) {
+    localStorage.setItem('x_token', props.token);
+    localStorage.setItem('x_tokenExp', props.tokenExp);
+  }
+  const token = localStorage.getItem('x_token');
+  const tokenExp = localStorage.getItem('x_tokenExp');
 
-config.headers['Content'] = 'application/json;charset=UTF-8';
+  if (token && tokenExp) {
+    config.headers['x_token'] = token;
+    config.headers['x_tokenExp'] = tokenExp;
+  }
+  config.headers['Content'] = 'application/json;charset=UTF-8';
+};
+saveToken();
 
 export const headersConfig = config;

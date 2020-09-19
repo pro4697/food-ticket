@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import QRCode from 'qrcode.react';
 import styled from 'styled-components';
-import { Row, Col, Typography, Modal, Button } from 'antd';
+import { Row, Col, Typography, Modal, Button, message } from 'antd';
 import {
   FadeIn,
   StyledApp,
@@ -87,6 +87,10 @@ function TicketPage() {
   const [IntervalId, setIntervalId] = useState(null);
 
   useEffect(() => {
+    getTicket();
+  }, [user.userData]);
+
+  const getTicket = () => {
     if (typeof user.userData !== 'undefined') {
       axios
         .post(`${SERVER}/api/ticket/getTicket`, {
@@ -101,14 +105,14 @@ function TicketPage() {
           }
         });
     }
-  }, [user.userData]);
+  };
 
   const onClick = (e) => {
     setPopupData(Ticket[e.currentTarget.value]);
     setVisible(true);
 
     //////////////////////////////////////////////////////////////
-    //    많은 사용자가 이용시 서버에 부하를 줄수있는 1순위 코드    //
+    //                        polling                           //
     //////////////////////////////////////////////////////////////
 
     // 같은 블럭내에서 setTimeout을 사용해야 하므로 해당 변수 선언
@@ -116,17 +120,18 @@ function TicketPage() {
 
     let key = Ticket[e.currentTarget.value].key;
 
+    // 식권 사용시 자동 닫힘
     setIntervalId(
       (thisInterval = setInterval(() => {
         setTrashValue(Math.floor(Math.random() * 10));
         axios
           .post(`${SERVER}/api/ticket/isTicket`, { key })
           .then((response) => {
-            // 식권 사용시 자동 닫힘
             if (!response.data.success) {
               setVisible(false);
               clearInterval(thisInterval);
-              window.location.reload();
+              getTicket();
+              message.success('식권 사용 완료', 0.75);
             }
           });
       }, 2500))

@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { loginUser, registerUser } from '../../../_actions/user_actions';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Form, Input, Button, Checkbox, Typography } from 'antd';
+import { Form, Input, Button, Checkbox, Typography, message } from 'antd';
 import { useDispatch } from 'react-redux';
-import { headersConfig } from '../../Config';
-import KakaoBtn from '../KakaoBtn/KakaoBtn';
+import { saveToken } from '../../Config';
+import { KakaoLogin, GithubLogin } from '../SocialLogin';
 import { StyledApp } from '../../Style_Etc';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
@@ -43,17 +43,14 @@ function LoginPage(props) {
 
   const saveUserData = (props) => {
     localStorage.setItem('userId', props.userId);
-    localStorage.setItem('x_token', props.token);
-    localStorage.setItem('x_tokenExp', props.tokenExp);
-    headersConfig.headers['x_token'] = localStorage.getItem('x_token');
-    headersConfig.headers['x_tokenExp'] = localStorage.getItem('x_tokenExp');
+    saveToken(props);
   };
 
   const initialEmail = localStorage.getItem('rememberMe')
     ? localStorage.getItem('rememberMe')
     : '';
 
-  const loginAction = (values, isKakao, { setSubmitting }) => {
+  const loginAction = (values, isSocial, { setSubmitting }) => {
     setTimeout(() => {
       let dataToSubmit = {
         email: values.email,
@@ -65,8 +62,9 @@ function LoginPage(props) {
           if (response.payload.loginSuccess) {
             // 로그인 성공시
             saveUserData(response.payload);
+            message.success('로그인 성공', 0.75);
             // Kakao 로그인이면 email자동저장 안함
-            if (rememberMe === true && !isKakao) {
+            if (rememberMe === true && !isSocial) {
               localStorage.setItem('rememberMe', values.email);
             } else {
               localStorage.removeItem('rememberMe');
@@ -74,7 +72,7 @@ function LoginPage(props) {
             props.history.push('/');
           } else {
             // 로그인 실패시
-            if (isKakao) {
+            if (isSocial) {
               // 카카오로 처음 로그인 하는경우 자동 회원가입
               let _dataToSubmit = {
                 email: values.email,
@@ -213,8 +211,9 @@ function LoginPage(props) {
                   Log in
                 </StyledBtn>
                 <br />
-                <KakaoBtn loginAction={loginAction} />
                 Or <Link to='/register'>register now!</Link>
+                <KakaoLogin loginAction={loginAction} />
+                <GithubLogin callback={false} />
               </Form.Item>
             </Form>
           </StyledApp>

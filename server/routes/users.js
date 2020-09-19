@@ -1,8 +1,10 @@
 const express = require('express');
+const axios = require('axios');
 const router = express.Router();
 const { User } = require('../models/User');
 const { Ticket } = require('../models/Ticket');
 const { auth } = require('../middleware/auth');
+const { JsonWebTokenError } = require('jsonwebtoken');
 
 router.get('/auth', auth, (req, res) => {
   res.status(200).json({
@@ -46,6 +48,69 @@ router.post('/login', (req, res) => {
         if (err) return res.status(400).send(err);
         res.status(200).json({
           loginSuccess: true,
+          userId: user._id,
+          tokenExp: user.tokenExp,
+          token: user.token,
+        });
+      });
+    });
+  });
+});
+
+router.post('/githubLogin', async (req, res) => {
+  if (!req.body.code) {
+    return res.send({ success: false, messge: 'code error' });
+  }
+
+  const response = await axios.post(
+    'https://github.com/login/oauth/access_token',
+    {
+      code: req.body.code,
+      client_id: 'b1ca53d55037a1da7d82',
+      client_secret: 'c2e6485de77917990e2c6c398caa47f9f0f94bef',
+    },
+    {
+      headers: {
+        accept: 'application/json',
+      },
+    }
+  );
+
+  const token = response.data.access_token;
+  if (!token) {
+    return res.send({ success: false, message: 'token error' });
+  }
+  const { data } = await axios.get('https://api.github.com/user', {
+    headers: {
+      Authorization: `token ${token}`,
+    },
+  });
+
+  const result = {
+    email: `g${data.login}@github.com`,
+    password: `Github${data.id}`,
+    name: data.name,
+    image: `uploads/images/no-user.svg`,
+  };
+
+  User.findOne({ email: result.email }, async (err, user) => {
+    if (!user) {
+      const new_user = new User(result);
+      try {
+        await new_user.save();
+      } catch (err) {
+        return res.json({ success: false, message: 'DB error' });
+      }
+    }
+
+    user.comparePassword(result.password, (err, isMatch) => {
+      if (!isMatch)
+        return res.json({ success: false, message: 'Wrong password' });
+
+      user.generateToken((err, user) => {
+        if (err) return res.status(400).send(err);
+        res.status(200).json({
+          success: true,
           userId: user._id,
           tokenExp: user.tokenExp,
           token: user.token,

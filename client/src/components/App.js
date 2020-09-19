@@ -5,14 +5,15 @@ import styled from 'styled-components';
 // pages for this product
 
 //About Auth
-import LandingPage from './views/LandingPage/LandingPage.js';
-import LoginPage from './views/LoginPage/LoginPage.js';
-import RegisterPage from './views/RegisterPage/RegisterPage.js';
-import MenuPage from './views/MenuPage/MenuPage.js';
-import MenuUploadPage from './views/MenuUploadPage/MenuUploadPage.js';
-import TicketPage from './views/TicketPage/TicketPage.js';
-import QrReaderPage from './views/QrReaderPage/QrReaderPage.js';
+import LandingPage from './views/LandingPage/LandingPage';
+import LoginPage from './views/LoginPage/LoginPage';
+import RegisterPage from './views/RegisterPage/RegisterPage';
+import MenuPage from './views/MenuPage/MenuPage';
+import MenuUploadPage from './views/MenuUploadPage/MenuUploadPage';
+import TicketPage from './views/TicketPage/TicketPage';
+import QrReaderPage from './views/QrReaderPage/QrReaderPage';
 import NavBar from './views/NavBar/NavBar';
+import githubLogin from './views/SocialLogin/Github';
 import { GlobalStyle } from './Style_Global';
 
 const WrapSpacer = styled.div`
@@ -63,6 +64,7 @@ function App() {
             path='/qr_reader'
             component={Auth(QrReaderPage, true, true)}
           />
+          <Route exact path='/githubLogin' component={githubLogin} />
         </Switch>
       </ContentsWarp>
     </Suspense>

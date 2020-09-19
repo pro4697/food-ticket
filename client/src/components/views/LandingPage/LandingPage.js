@@ -130,7 +130,7 @@ function LandingPage() {
         {user.userData !== undefined ? (
           `${user.userData.name || 'Guest'}님 환영합니다`
         ) : (
-          <LoadingIcon small={true} />
+          <LoadingIcon small='true' />
         )}
       </Title>
       <CardContainer gutter={[32, 32]}>
