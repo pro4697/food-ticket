@@ -88,7 +88,7 @@ function TicketPage() {
 
   useEffect(() => {
     getTicket();
-  }, [user.userData]);
+  }, [getTicket, user.userData]);
 
   const getTicket = () => {
     if (typeof user.userData !== 'undefined') {

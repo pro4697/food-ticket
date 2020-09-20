@@ -29,6 +29,22 @@ export const LoadingIcon = styled(LoadingOutlined)`
   font-size: ${(props) => (props.small ? 'inherit' : '55px')};
 `;
 
+export const SocialIcon = styled.img`
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  @media (max-width: 768px) {
+    width: 36px;
+    height: 36px;
+  }
+`;
+
 export const StyledApp = styled.div`
   flex-direction: column;
   display: flex;

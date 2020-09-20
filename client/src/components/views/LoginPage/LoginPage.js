@@ -30,6 +30,14 @@ const StyledBtn = styled(Button)`
   margin: 10px 0;
 `;
 
+const SocialLogin = styled.div`
+  display: flex;
+  margin: 10px 0;
+  @media (max-width: 768px) {
+    margin: 5px 0;
+  }
+`;
+
 function LoginPage(props) {
   const dispatch = useDispatch();
   const rememberMeChecked = localStorage.getItem('rememberMe') ? true : false;
@@ -62,7 +70,7 @@ function LoginPage(props) {
           if (response.payload.loginSuccess) {
             // 로그인 성공시
             saveUserData(response.payload);
-            message.success('로그인 성공', 0.75);
+            message.success('로그인 성공', 1);
             // Kakao 로그인이면 email자동저장 안함
             if (rememberMe === true && !isSocial) {
               localStorage.setItem('rememberMe', values.email);
@@ -211,9 +219,11 @@ function LoginPage(props) {
                   Log in
                 </StyledBtn>
                 <br />
+                <SocialLogin>
+                  <KakaoLogin loginAction={loginAction} />
+                  <GithubLogin callback={false} />
+                </SocialLogin>
                 Or <Link to='/register'>register now!</Link>
-                <KakaoLogin loginAction={loginAction} />
-                <GithubLogin callback={false} />
               </Form.Item>
             </Form>
           </StyledApp>
