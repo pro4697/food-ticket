@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { message } from 'antd';
 import { SERVER, saveToken } from '../../Config';
 import styled from 'styled-components';
-import { SocialIcon } from '../../Style_Etc';
+import { StyledApp, LoadingIcon, SocialIcon } from '../../Style_Etc';
 
 const GithubButton = styled.a`
   display: flex;
@@ -44,15 +44,20 @@ function GithubBtn({ callback = true, history, location }) {
     }
   }, [callback, history, location]);
 
-  if (callback) {
-    return null;
-  } else {
-    return (
-      <GithubButton href={link}>
-        <SocialIcon src='/images/github.png' />
-      </GithubButton>
-    );
-  }
+  return (
+    <>
+      {callback && (
+        <StyledApp>
+          <LoadingIcon />
+        </StyledApp>
+      )}
+      {!callback && (
+        <GithubButton href={link}>
+          <SocialIcon src='/images/github.png' />
+        </GithubButton>
+      )}
+    </>
+  );
 }
 
 GithubBtn.propTypes = {

@@ -46,8 +46,8 @@ export const SocialIcon = styled.img`
 `;
 
 export const StyledApp = styled.div`
-  flex-direction: column;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 700px;
