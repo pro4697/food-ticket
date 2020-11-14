@@ -41,9 +41,9 @@ function MenuPage(props) {
       .then((response) => {
         if (response.data.success) {
           //cnt property 생성
-          response.data.result.map((props) => {
-            props.cnt = 0;
-          });
+          response.data.result.map((props) =>
+            props.cnt = 0
+          );
           setMenu(response.data.result);
           setLoading(true);
         } else {
@@ -54,9 +54,9 @@ function MenuPage(props) {
 
   const getCnt = () => {
     let count = 0;
-    Menu.map((props) => {
-      count += props.cnt;
-    });
+    Menu.map((props) =>
+      count += props.cnt
+    );
     return count;
   };
 
@@ -116,7 +116,7 @@ function MenuPage(props) {
       .cancel(() => { })
       .done(() => {
         let variable = { _id: user.userData._id, Cart: [] };
-        Menu.map((menu) => {
+        Menu.forEach((menu) => {
           if (menu.cnt > 0) {
             variable.Cart.push(menu);
           }

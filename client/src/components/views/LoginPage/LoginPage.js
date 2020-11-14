@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { loginUser, registerUser } from '../../../_actions/user_actions';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Form, Input, Button, Checkbox, Typography, message } from 'antd';
+import { Form, Input, Button, Checkbox, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
 import { saveToken } from '../../Config';
 import { KakaoLogin, GithubLogin } from '../SocialLogin';

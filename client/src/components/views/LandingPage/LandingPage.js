@@ -21,9 +21,11 @@ const App = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 30px;
-  margin-bottom: 100px;
+  display: none;
   @media (max-width: 767px) {
+    display: block;
+    font-size: 30px;
+    margin-bottom: 100px;
     margin-top: 50px;
     margin-bottom: 70px;
     color: white;
@@ -38,8 +40,7 @@ const CardContainer = styled(Row)`
     margin-bottom: -1px !important;
     border-radius: 30px 30px 0 0 !important;
     background-color: white;
-    box-shadow: 3px -7px 5px rgba(50, 50, 93, 0.2),
-      -3px -7px 5px rgba(50, 50, 93, 0.2);
+    box-shadow: 3px -7px 5px rgba(50, 50, 93, 0.2), -3px -7px 5px rgba(50, 50, 93, 0.2);
   }
 `;
 
@@ -70,12 +71,11 @@ const Img = styled.img`
   align-self: center;
   margin-bottom: 5px;
   transition: 0.2s;
-  background: cover;
   background-position: center center;
   @media (max-width: 767px) {
     position: relative;
-    width: 210px;
-    height: 210px;
+    width: 42vw;
+    height: 42vw;
     border-radius: 10px;
     box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
       0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
@@ -97,10 +97,11 @@ const Blur = styled.div`
 `;
 
 const CardTitle = styled.span`
+  display:none;
   position: relative;
   width: 100%;
   text-align: center;
-  z-index: 1;
+  z-index: 1222;
   color: black;
   font-size: 22px;
   letter-spacing: 2px;
@@ -109,6 +110,7 @@ const CardTitle = styled.span`
   margin-top: 5px;
   user-select: none;
   @media (max-width: 1200px) {
+    display:block;
     font-size: 18px;
   }
   @media (max-width: 992px) {
@@ -131,11 +133,8 @@ const Card = styled(Col)`
   animation: ${FadeIn} 0.3s ease;
   &:hover ${StyledLink} {
     @media (max-width: 767px) {
-      transition: 0.2s;
-      border: 10px solid transparent;
+      transform: scale(1.07);
     }
-    /* opacity: 0; */
-    /* transform: scale(1.08) !important; */
   }
   &:hover ${CardTitle} {
     @media (max-width: 1200px) {
@@ -189,12 +188,8 @@ function LandingPage() {
           <Card md={6} sm={12} xs={12} key={idx}>
             <StyledLink to={isSection(idx + 1)} draggable='false' key={idx}>
               <Img
-                src={`/images/${idx + 1}.jpg`}
+                src={`/images/${idx + 1}.png`}
                 draggable='false'
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = `/images/${idx + 1}.png`;
-                }}
                 alt={sectionName[idx]}
                 style={{ objectFit: 'cover' }}
               />
