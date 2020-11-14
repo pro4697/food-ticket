@@ -27,8 +27,8 @@ const WrapSpacer = styled.div`
 const ContentsWarp = styled.div`
   position: relative;
   /* max-width: 1400px; */
-  margin: 0px auto 0px;
-  padding: 16px 16px 50px;
+  /* margin: 0px auto 0px;
+  padding: 16px 16px 50px; */
   box-sizing: border-box;
   min-height: 83vh;
   @media (max-width: 767px) {

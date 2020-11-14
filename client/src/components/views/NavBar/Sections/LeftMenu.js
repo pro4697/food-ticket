@@ -24,9 +24,9 @@ function LeftMenu({ mode }) {
 
   return (
     <StyledMenu mode={mode}>
-      <Menu.Item key='main'>
+      {/* <Menu.Item key='main'>
         <Link to='/'>Home</Link>
-      </Menu.Item>
+      </Menu.Item> */}
       {user.userData && user.userData.role && (
         <Menu.Item key='menuUploads'>
           <Link to='/menu_uploads'>Menu Uploads</Link>

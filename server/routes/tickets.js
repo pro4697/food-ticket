@@ -39,14 +39,14 @@ router.post('/payment', (req, res) => {
   res.status(200).json({ success: true });
 });
 
-router.post('/getTicket', (req, res) => {
-  Ticket.find({ user: req.body.userId }).exec((err, result) => {
+router.get('/ticket', (req, res) => {
+  Ticket.find({ user: req.query.userId }).exec((err, result) => {
     if (err) return res.status(400).json({ success: false, err });
     res.status(200).json({ success: true, result });
   });
 });
 
-router.post('/useTicket', (req, res) => {
+router.post('/using', (req, res) => {
   Ticket.findOneAndDelete({ key: req.body.key }).exec((err, result) => {
     if (err) return res.status(400).json({ success: false, err });
     if (result) res.status(200).json({ success: true, result });
@@ -54,7 +54,7 @@ router.post('/useTicket', (req, res) => {
   });
 });
 
-router.post('/isTicket', (req, res) => {
+router.post('/check', (req, res) => {
   Ticket.findOne({ key: req.body.key }).exec((err, result) => {
     if (err) return res.status(400).json({ success: false, err });
     if (result) res.status(200).json({ success: true });

@@ -4,7 +4,6 @@ const router = express.Router();
 const { User } = require('../models/User');
 const { Ticket } = require('../models/Ticket');
 const { auth } = require('../middleware/auth');
-const { JsonWebTokenError } = require('jsonwebtoken');
 
 router.get('/auth', auth, (req, res) => {
   res.status(200).json({
@@ -57,7 +56,7 @@ router.post('/login', (req, res) => {
   });
 });
 
-router.post('/githubLogin', async (req, res) => {
+router.post('/github', async (req, res) => {
   if (!req.body.code) {
     return res.send({ success: false, messge: 'code error' });
   }
@@ -134,10 +133,10 @@ router.get('/logout', auth, async (req, res) => {
   }
 });
 
-router.post('/delete', (req, res) => {
-  User.findOneAndDelete({ _id: req.body.userId }, (err, result) => {
+router.delete('/delete', (req, res) => {
+  User.findOneAndDelete({ _id: req.query.userId }, (err, result) => {
     if (err) return res.status(400).json({ success: false, err });
-    Ticket.deleteMany({ user: req.body.userId }, (err, result) => {
+    Ticket.deleteMany({ user: req.query.userId }, (err, result) => {
       if (err) return res.status(400).json({ success: false, err });
       return res.status(200).json({ success: true });
     });

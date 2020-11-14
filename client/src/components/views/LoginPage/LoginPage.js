@@ -70,7 +70,7 @@ function LoginPage(props) {
           if (response.payload.loginSuccess) {
             // 로그인 성공시
             saveUserData(response.payload);
-            message.success('로그인 성공', 1);
+            localStorage.setItem('msg', true);
             // Kakao 로그인이면 email자동저장 안함
             if (rememberMe === true && !isSocial) {
               localStorage.setItem('rememberMe', values.email);

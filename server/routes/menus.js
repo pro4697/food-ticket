@@ -14,16 +14,16 @@ let storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }).single('file');
 
-router.post('/getMenu', (req, res) => {
+router.get('/menus', (req, res) => { // get으로 바꾸기
   // 섹션별 메뉴 가져오기
-  Menu.find({ section: req.body.section }).exec((err, result) => {
+  Menu.find({ section: req.query.section }).exec((err, result) => {
     if (err) return res.status(400).json({ success: false, err });
     res.status(200).json({ success: true, result });
   });
 });
 
 router.post('/uploadfiles', (req, res) => {
-  // 메뉴 생성후 저장
+  // 메뉴 사진 저장
   upload(req, res, (err) => {
     if (err) {
       return res.json({ success: false, err });
@@ -37,7 +37,7 @@ router.post('/uploadfiles', (req, res) => {
 });
 
 router.post('/savefiles', (req, res) => {
-  // 메뉴 생성후 저장
+  // 메뉴 생성
   const menu = new Menu(req.body);
   menu.save((err, dox) => {
     if (err) return res.status(400).json({ success: false });

@@ -1,6 +1,3 @@
-import 'react-app-polyfill/ie9';
-import 'react-app-polyfill/ie11';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
@@ -23,7 +20,7 @@ ReactDOM.render(
     store={createStoreWithMiddleware(
       Reducer,
       window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__()
+      window.__REDUX_DEVTOOLS_EXTENSION__()
     )}
   >
     <BrowserRouter>

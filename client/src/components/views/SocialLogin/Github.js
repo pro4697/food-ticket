@@ -28,7 +28,7 @@ function GithubBtn({ callback = true, history, location }) {
       });
 
       axios
-        .post(`${SERVER}/api/users/githubLogin`, { code })
+        .post(`${SERVER}/api/users/github`, { code })
         .then((response) => {
           if (response.data.success) {
             localStorage.setItem('userId', response.data.userId);

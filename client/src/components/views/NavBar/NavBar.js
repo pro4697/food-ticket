@@ -19,9 +19,10 @@ const NavMenu = styled.nav`
   overflow: hidden;
   box-shadow: 0 0 30px #f3f1f1;
   background-color: white;
+  box-shadow: 0 0 0 !important;
+  border-bottom: 0 !important;
+  background-color: transparent;
   @media (max-width: 767px) {
-    box-shadow: 0 0 0 !important;
-    border-bottom: 0 !important;
     background-color: #1890ff;
   }
 `;
@@ -83,6 +84,7 @@ const SectionTitle = styled.div`
 const Container = styled.div`
   & .ant-menu {
     padding: 0px !important;
+    background-color: transparent;
   }
   & .ant-menu-item {
     margin: 9px 0 0 0 !important;

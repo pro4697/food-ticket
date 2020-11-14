@@ -86,15 +86,13 @@ function TicketPage() {
   const [TrashValue, setTrashValue] = useState(2);
   const [IntervalId, setIntervalId] = useState(null);
 
-  useEffect(() => {
-    getTicket();
-  }, [getTicket, user.userData]);
-
   const getTicket = () => {
     if (typeof user.userData !== 'undefined') {
       axios
-        .post(`${SERVER}/api/ticket/getTicket`, {
-          userId: user.userData._id,
+        .get(`${SERVER}/api/tickets/ticket`, {
+          params: {
+            userId: user.userData._id
+          }
         })
         .then((response) => {
           if (response.data.success) {
@@ -106,6 +104,10 @@ function TicketPage() {
         });
     }
   };
+
+  useEffect(() => {
+    getTicket();
+  }, [user.userData]);
 
   const onClick = (e) => {
     setPopupData(Ticket[e.currentTarget.value]);
@@ -125,7 +127,7 @@ function TicketPage() {
       (thisInterval = setInterval(() => {
         setTrashValue(Math.floor(Math.random() * 10));
         axios
-          .post(`${SERVER}/api/ticket/isTicket`, { key })
+          .post(`${SERVER}/api/tickets/check`, { key })
           .then((response) => {
             if (!response.data.success) {
               setVisible(false);

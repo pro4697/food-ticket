@@ -37,7 +37,7 @@ function MenuPage(props) {
 
   useEffect(() => {
     axios
-      .post(`${SERVER}/api/menus/getMenu`, { section: section })
+      .get(`${SERVER}/api/menus/menus`, { params: { section } })
       .then((response) => {
         if (response.data.success) {
           //cnt property 생성
@@ -113,7 +113,7 @@ function MenuPage(props) {
         alert(msg);
         console.log(data);
       })
-      .cancel(() => {})
+      .cancel(() => { })
       .done(() => {
         let variable = { _id: user.userData._id, Cart: [] };
         Menu.map((menu) => {
@@ -123,7 +123,7 @@ function MenuPage(props) {
         });
 
         axios
-          .post(`${SERVER}/api/ticket/payment`, variable)
+          .post(`${SERVER}/api/tickets/payment`, variable)
           .then((response) => {
             if (response.data.success) {
               message.success('식권 구매 완료.');

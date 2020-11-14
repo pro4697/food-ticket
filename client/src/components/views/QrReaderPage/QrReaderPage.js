@@ -60,7 +60,7 @@ function QrReaderPage() {
       let tmp = data.split('^');
       if (tmp[1] && tmp[1].length === 88) {
         axios
-          .post(`${SERVER}/api/ticket/useTicket`, { key: tmp[1] })
+          .post(`${SERVER}/api/tickets/using`, { key: tmp[1] })
           .then((response) => {
             if (response.data.success) {
               setName([{ color: 'white', msg: tmp[0] }, ...Name]);

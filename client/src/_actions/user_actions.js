@@ -53,11 +53,10 @@ export function logoutUser() {
 }
 
 export function deleteUser() {
-  let dataToSubmit = {
-    userId: localStorage.getItem('userId'),
-  };
+  let userId = localStorage.getItem('userId');
+
   const request = axios
-    .post(`${SERVER}/api/users/delete`, dataToSubmit)
+    .delete(`${SERVER}/api/users/delete`, { params: { userId } })
     .then((response) => response.data);
 
   return {
