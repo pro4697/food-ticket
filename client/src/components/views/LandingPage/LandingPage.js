@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { Row, Col, message } from 'antd';
-import { FadeIn } from '../../Style_Etc';
+import { FadeIn, LoadingIcon } from '../../Style_Etc';
 
 const App = styled.div`
   flex-direction: column;
@@ -17,6 +17,16 @@ const App = styled.div`
     padding: 0rem;
     height: 100%;
     background-color: #1890ff;
+  }
+`;
+
+const Title = styled.div`
+  font-size: 30px;
+  margin-bottom: 100px;
+  @media (max-width: 767px) {
+    margin-top: 50px;
+    margin-bottom: 70px;
+    color: white;
   }
 `;
 
@@ -154,7 +164,6 @@ function LandingPage() {
   const isSection = (idx) => (idx < 4 ? `/section/${idx}` : '/ticket');
   const user = useSelector((state) => state.user);
 
-  // redux로 실행시 한번만 뜨도록 변경할 것.
   useEffect(() => {
     if (typeof user.userData !== 'undefined') {
       if (typeof user.userData.name !== 'undefined') {
@@ -168,6 +177,13 @@ function LandingPage() {
 
   return (
     <App>
+      <Title>
+        {user.userData !== undefined ? (
+          `${user.userData.name || 'Guest'}님 환영합니다`
+        ) : (
+            <LoadingIcon small='true' />
+          )}
+      </Title>
       <CardContainer gutter={[0, 0]}>
         {sectionName.map((section, idx) => (
           <Card md={6} sm={12} xs={12} key={idx}>
