@@ -101,7 +101,6 @@ const CardTitle = styled.span`
   position: relative;
   width: 100%;
   text-align: center;
-  z-index: 1222;
   color: black;
   font-size: 22px;
   letter-spacing: 2px;
