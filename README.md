@@ -1,7 +1,7 @@
 # Food Ticket (2020.08)
 > 식권을 QR코드로 담았습니다.
 
-![foodticket](https://user-images.githubusercontent.com/43352126/93530527-ab16a080-f978-11ea-94d1-eaa1669a7dee.png)
+![foodticket_github](https://user-images.githubusercontent.com/43352126/99451381-76699a00-2965-11eb-907a-82ec504122bc.png)
 
 ### Preview
 -   https://foodticket.xyz/
