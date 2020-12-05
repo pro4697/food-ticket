@@ -40,7 +40,8 @@ const CardContainer = styled(Row)`
     margin-bottom: -1px !important;
     border-radius: 30px 30px 0 0 !important;
     background-color: white;
-    box-shadow: 3px -7px 5px rgba(50, 50, 93, 0.2), -3px -7px 5px rgba(50, 50, 93, 0.2);
+    box-shadow: 3px -7px 5px rgba(50, 50, 93, 0.2),
+      -3px -7px 5px rgba(50, 50, 93, 0.2);
   }
 `;
 
@@ -76,6 +77,7 @@ const Img = styled.img`
     position: relative;
     width: 42vw;
     height: 42vw;
+    /* border-radius: ${(props) => (props.idx === 2 ? '50%' : '10px')}; */
     border-radius: 10px;
     box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
       0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
@@ -97,7 +99,7 @@ const Blur = styled.div`
 `;
 
 const CardTitle = styled.span`
-  display:none;
+  display: none;
   position: relative;
   width: 100%;
   text-align: center;
@@ -109,7 +111,7 @@ const CardTitle = styled.span`
   margin-top: 5px;
   user-select: none;
   @media (max-width: 1200px) {
-    display:block;
+    display: block;
     font-size: 18px;
   }
   @media (max-width: 992px) {
@@ -171,7 +173,7 @@ function LandingPage() {
         }
       }
     }
-  }, [user.userData])
+  }, [user.userData]);
 
   return (
     <App>
@@ -179,8 +181,8 @@ function LandingPage() {
         {user.userData !== undefined ? (
           `${user.userData.name || 'Guest'}님 환영합니다`
         ) : (
-            <LoadingIcon small='true' />
-          )}
+          <LoadingIcon small='true' />
+        )}
       </Title>
       <CardContainer gutter={[0, 0]}>
         {sectionName.map((section, idx) => (
@@ -191,6 +193,7 @@ function LandingPage() {
                 draggable='false'
                 alt={sectionName[idx]}
                 style={{ objectFit: 'cover' }}
+                // idx={idx}
               />
               <CardTitle>{section}</CardTitle>
               <Blur />
