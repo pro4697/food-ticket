@@ -14,20 +14,22 @@
 -   AWS
 
 ### Library
--   작성중...
+-   instascan, dropzone, qrcode
 -   Ant Design
 -   Formik
--   BootPay (https://www.bootpay.co.kr/)
+-   BootPay (https://www.bootpay.co.kr/) PG결제
 
 ### etc
--   SSL
--   nginx
+-   Typescript 버전 (https://github.com/pro4697/Food-Ticket_TS)
+-   jQuery 버전 (https://github.com/pro4697/Food_Ticket_jQuery)
+-   SSL 적용, nginx
 -   Function component
 -   styled-components
 -   React Hook, Redux
 -   PropTypes
--   Kakao Login
+-   소셜로그인(Kakao, Github)
 -   반응형 웹으로 작성하였습니다.
 -   식권은 QRcode로 구현하였습니다.
 -   카카오페이로 테스트 결제 가능합니다.
--   관리자 로그인시 QRcode 리더기 실행 가능합니다.
+-   관리자 로그인시 QRcode 리더기 실행가능, 메뉴업로드(dropzone) 가능.
+-   반응형 웹
