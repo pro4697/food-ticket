@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react';
 import { auth } from '../_actions/user_actions';
-import { useSelector, useDispatch } from 'react-redux';
-import { headersConfig } from '../components/Config';
+import { useDispatch } from 'react-redux';
 
 export default function (ComposedClass, reload, adminRoute = null) {
 	function AuthenticationCheck(props) {
-		let user = useSelector((state) => state.user);
 		const dispatch = useDispatch();
 
 		useEffect(() => {
-			dispatch(auth(headersConfig)).then(async (response) => {
+			dispatch(auth()).then(async (response) => {
 				if (await !response.payload.isAuth) {
 					if (reload) {
 						props.history.push('/');
@@ -27,7 +25,7 @@ export default function (ComposedClass, reload, adminRoute = null) {
 			});
 		}, [dispatch, props.history]);
 
-		return <ComposedClass {...props} user={user} />;
+		return <ComposedClass {...props} />;
 	}
 	return AuthenticationCheck;
 }
