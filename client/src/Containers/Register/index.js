@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { registerUser } from '../../../_actions/user_actions';
+import { registerUser } from '../../_actions/user_actions';
 import { useDispatch } from 'react-redux';
 import { Form, Input, Button, Typography, message } from 'antd';
-import { StyledApp } from '../../Style_Etc';
+import { StyledApp } from '../../common/Style_Etc';
 const { Title } = Typography;
 
 const InputFeedback = styled.div`

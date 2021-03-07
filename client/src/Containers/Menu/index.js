@@ -4,11 +4,11 @@ import { message, Typography } from 'antd';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import BootPay from 'bootpay-js';
-import { BoxIcon, LoadingIcon } from '../../Style_Etc';
-import { SERVER } from '../../Config';
+import { BoxIcon, LoadingIcon } from '../../common/Style_Etc';
+import { SERVER } from '../../common/config';
 
-import MenuContainer from './Sections/MenuContainer';
-import CartContainer from './Sections/CartContainer';
+import MenuContainer from './Menu';
+import CartContainer from './Cart';
 
 const { Title } = Typography;
 

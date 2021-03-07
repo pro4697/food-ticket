@@ -4,10 +4,9 @@ import axios from 'axios';
 import QRCode from 'qrcode.react';
 import styled from 'styled-components';
 import { Row, Col, Typography, Modal, Button, message } from 'antd';
-import { FadeIn, StyledApp, BoxIcon, LoadingIcon, BgColor } from '../../Style_Etc';
-import { SERVER } from '../../Config';
-import { sectionName } from '../LandingPage/LandingPage';
-import { ConsoleSqlOutlined } from '@ant-design/icons';
+import { FadeIn, StyledApp, BoxIcon, LoadingIcon, BgColor } from '../../common/Style_Etc';
+import { SERVER } from '../../common/config';
+import { sectionName } from '../../Containers/Home';
 
 const { Title } = Typography;
 

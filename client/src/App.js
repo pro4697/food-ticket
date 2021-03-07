@@ -1,20 +1,20 @@
 import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Auth from '../hoc/auth';
+import Auth from './common/auth';
 import styled from 'styled-components';
 // pages for this product
 
 //About Auth
-import LandingPage from './views/LandingPage/LandingPage';
-import LoginPage from './views/LoginPage/LoginPage';
-import RegisterPage from './views/RegisterPage/RegisterPage';
-import MenuPage from './views/MenuPage/MenuPage';
-import MenuUploadPage from './views/MenuUploadPage/MenuUploadPage';
-import TicketPage from './views/TicketPage/TicketPage';
-import QrReaderPage from './views/QrReaderPage/QrReaderPage';
-import NavBar from './views/NavBar/NavBar';
-import githubLogin from './views/SocialLogin/Github';
-import { GlobalStyle } from './Style_Global';
+import LandingPage from './Containers/Home';
+import LoginPage from './Containers/Login';
+import RegisterPage from './Containers/Register';
+import MenuPage from './Containers/Menu';
+import MenuUploadPage from './Containers/MenuUpload';
+import TicketPage from './Containers/Ticket';
+import QrReaderPage from './Containers/QrReader';
+import NavBar from './components/NavBar';
+import githubLogin from './components/SocialLogin/Github';
+import { GlobalStyle } from './common/Style_Global';
 
 const WrapSpacer = styled.div`
 	display: block;

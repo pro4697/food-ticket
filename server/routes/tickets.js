@@ -4,7 +4,6 @@ const crypto = require('crypto');
 const { Ticket } = require('../models/Ticket');
 
 router.post('/payment', (req, res) => {
-  );
 	// 구매완료후 DB에 식권 저장
 	const TicketList = [];
 	let payOrder = 0;
