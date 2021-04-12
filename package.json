@@ -1,37 +1,87 @@
 {
-  "name": "Food-Ticket",
+  "name": "food-ticket",
   "version": "1.0.0",
-  "description": "Basic implementation",
-  "main": "server/index.js",
-  "engine": {
-    "node": "10.16.0",
-    "npm": "6.9.0"
+  "private": true,
+  "dependencies": {
+    "@craco/craco": "^5.6.4",
+    "@testing-library/react": "^10.0.4",
+    "@testing-library/user-event": "^10.1.2",
+    "@types/node": "^14.14.37",
+    "@types/qrcode.react": "^1.0.1",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-dropzone": "^5.1.0",
+    "@types/react-helmet": "^6.1.1",
+    "@types/react-redux": "^7.1.16",
+    "@types/react-router": "^5.1.13",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/styled-components": "^5.1.9",
+    "antd": "^4.15.1",
+    "axios": "^0.21.1",
+    "bootpay-js": "^3.3.2",
+    "connected-react-router": "^6.9.1",
+    "formik": "^2.2.6",
+    "history": "^5.0.0",
+    "qrcode.react": "^1.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-dropzone": "^11.3.2",
+    "react-helmet": "^6.1.0",
+    "react-kakao-login": "^2.1.0",
+    "react-qr-reader": "^2.2.1",
+    "react-redux": "^7.2.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3",
+    "redux": "^4.0.5",
+    "redux-promise": "^0.6.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "styled-components": "^5.2.3",
+    "typescript": "^4.2.4",
+    "use-react-router": "^1.0.7",
+    "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "node server/index.js",
-    "backend": "nodemon server/index.js",
-    "frontend": "npm run start --prefix client",
-    "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "precommit": "lint-staged",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix --ext './src/**/*.{ts,tsx,js,jsx}'"
   },
-  "author": "Kichan Yoon",
-  "license": "MIT",
-  "dependencies": {
-    "axios": "^0.20.0",
-    "bcrypt": "^5.0.0",
-    "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.4",
-    "cors": "^2.8.5",
-    "crypto": "^1.0.1",
-    "express": "^4.17.1",
-    "helmet": "^3.22.0",
-    "moment": "^2.24.0",
-    "mongoose": "^5.4.20",
-    "multer": "^1.4.2",
-    "nodemailer": "^6.4.2"
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "yarn lint"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
-    "concurrently": "^4.1.2",
-    "morgan": "^1.9.1",
-    "nodemon": "^1.19.1"
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
+    "eslint": "^7.24.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import-helpers": "^1.1.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "lint-staged": "^10.5.4"
   }
 }
