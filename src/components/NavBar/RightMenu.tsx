@@ -43,10 +43,10 @@ function RightMenu({ mode }: TSideMenuParams) {
     return (
       <Menu mode={mode}>
         <Menu.Item key="mail">
-          <Link to="/login">Signin</Link>
+          <Link to="/login">Sign in</Link>
         </Menu.Item>
         <Menu.Item key="app">
-          <Link to="/register">Signup</Link>
+          <Link to="/register">Sign up</Link>
         </Menu.Item>
       </Menu>
     );

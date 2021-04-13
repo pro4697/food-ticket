@@ -10,7 +10,6 @@ const Auth: any = (ComposedClass: React.ComponentType<any>, reload?: boolean, ad
     const history = useHistory();
     useEffect(() => {
       dispatch(auth()).then(async (response: any) => {
-        history.push('/');
         if (!response.payload.isAuth) {
           if (reload) {
             history.push('/');
