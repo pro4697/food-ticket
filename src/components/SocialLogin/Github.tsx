@@ -1,17 +1,12 @@
 import { useEffect } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
+import { saveToken, SERVER } from '@common/config';
+import { LoadingIcon, SocialIcon, StyledApp } from '@common/Style_Etc';
 import { message } from 'antd';
 import axios from 'axios';
 import qs from 'qs';
 import styled from 'styled-components';
-
-import { saveToken, SERVER } from '../../common/config';
-import { LoadingIcon, SocialIcon, StyledApp } from '../../common/Style_Etc';
-
-type TGithubBtnParams = {
-  callback?: boolean;
-} & RouteComponentProps;
 
 const GithubButton = styled.a`
   display: flex;
@@ -23,10 +18,12 @@ const GithubButton = styled.a`
   user-select: none;
 `;
 
-const fallback = 'localhost:3000/githubLogin';
+const fallback = 'http://localhost:3000/githubLogin';
 
-function GithubBtn({ callback = true, history, location }: TGithubBtnParams) {
+function GithubBtn({ callback = true }) {
   const link = `https://github.com/login/oauth/authorize?client_id=b1ca53d55037a1da7d82&redirect_uri=${fallback}`;
+  const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     if (callback) {
@@ -39,6 +36,7 @@ function GithubBtn({ callback = true, history, location }: TGithubBtnParams) {
           localStorage.setItem('userId', response.data.userId);
           saveToken(response.data);
           message.success('로그인 성공', 1);
+          history.push('/login');
           history.push('/');
         } else {
           console.error(response.data.message);

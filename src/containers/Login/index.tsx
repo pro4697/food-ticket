@@ -46,10 +46,17 @@ const StyledBtn = styled(Button)`
 
 const SocialLogin = styled.div`
   display: flex;
-  margin: 10px 0;
+  justify-content: space-around;
+  margin: auto;
+  /* margin: 10px 0; */
   @media (max-width: 768px) {
-    margin: 5px 0;
+    /* margin: 5px 0; */
   }
+`;
+
+const Register = styled.div`
+  margin-top: -5px;
+  text-align: right;
 `;
 
 function LoginPage(props: TLoginPageParams) {
@@ -124,10 +131,10 @@ function LoginPage(props: TLoginPageParams) {
         })
         .catch((err: any) => {
           console.error(err);
-          // setFormErrorMessage(err);
-          // setTimeout(() => {
-          // 	setFormErrorMessage('');
-          // }, 3000);
+          setFormErrorMessage(err);
+          setTimeout(() => {
+            setFormErrorMessage('');
+          }, 3000);
         });
       if (setSubmitting) {
         setSubmitting(false);
@@ -195,7 +202,9 @@ function LoginPage(props: TLoginPageParams) {
                 <KakaoLogin loginAction={loginAction} />
                 <GithubLogin {...props} callback={false} />
               </SocialLogin>
-              Or <Link to="/register">register now!</Link>
+              <Register>
+                <Link to="/register">Sign Up</Link>
+              </Register>
             </Form.Item>
           </Form>
         </StyledApp>

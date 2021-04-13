@@ -12,6 +12,7 @@ const KaKaoLogin = styled(_KaKaoLogin)`
   display: flex !important;
   padding: 0 !important;
   margin: 0 30px 0 auto;
+  width: 36px !important;
   background-color: transparent !important;
   border-color: transparent !important;
   border: 0 !important;
@@ -24,14 +25,13 @@ const KaKaoLogin = styled(_KaKaoLogin)`
 
 function KakaoBtn({ loginAction }: TKakaoBtnParams) {
   const responseKaKao: Props['onSuccess'] = (res) => {
-    console.log(res);
-    // const dataToSubmit = {
-    //   email: `k${res.profile.id}@kakao.com`,
-    //   password: `Kakao${res.profile.id}`,
-    //   name: res.profile.properties.nickname,
-    //   image: `uploads/images/no-user.svg`,
-    // };
-    // loginAction({ dataToSubmit, isSocial: true, setSubmitting: false });
+    const values = {
+      email: `k${res?.profile?.id}@kakao.com`,
+      password: `Kakao${res?.profile?.id}`,
+      name: res?.profile?.properties.nickname,
+      image: `uploads/images/no-user.svg`,
+    };
+    loginAction({ values, isSocial: true, setSubmitting: false });
   };
 
   const responseFail: Props['onFail'] = (err) => {
