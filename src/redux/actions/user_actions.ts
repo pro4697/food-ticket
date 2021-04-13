@@ -29,9 +29,8 @@ export function loginUser(dataToSubmit: TUserData) {
 }
 
 export function auth() {
-  console.log('config', headersConfig);
   const request = axios.get(`${SERVER}/api/users/auth`, headersConfig).then((response) => response.data);
-  console.log('request', request);
+
   return {
     type: AUTH_USER,
     payload: request,
