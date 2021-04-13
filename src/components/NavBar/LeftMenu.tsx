@@ -24,20 +24,19 @@ const StyledMenu = styled(Menu)`
 function LeftMenu({ mode }: TSideMenuParams) {
   const user = useSelector((state: TReducer) => state.user);
 
-  return (
-    <StyledMenu mode={mode}>
-      {user.userData && user.userData.role && (
+  if (user?.userData && user?.userData?.role) {
+    return (
+      <StyledMenu mode={mode}>
         <Menu.Item key="menuUploads">
           <Link to="/menu_uploads">Menu Uploads</Link>
         </Menu.Item>
-      )}
-      {user.userData && user.userData.role && (
         <Menu.Item key="qrReader">
           <Link to="/qr_reader">QR Reader</Link>
         </Menu.Item>
-      )}
-    </StyledMenu>
-  );
+      </StyledMenu>
+    );
+  }
+  return null;
 }
 
 export default LeftMenu;
