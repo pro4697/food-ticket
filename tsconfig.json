@@ -24,12 +24,11 @@
   "include": [
     "src",
     "src/redux",
-    "src/hooks",
     "src/utils",
     "src/containers",
     "src/components",
     "src/api",
     "src/styles",
-    "src/constants"
+    "src/common"
   ]
 }

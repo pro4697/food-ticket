@@ -4,12 +4,12 @@
     "paths": {
       "@/*": ["src/*"],
       "@redux/*": ["src/redux/*"],
-      "@hooks/*": ["src/hooks/*"],
       "@utils/*": ["src/utils/*"],
       "@containers/*": ["src/containers/*"],
       "@components/*": ["src/components/*"],
       "@api/*": ["src/api/*"],
       "@styles/*": ["src/styles/*"],
+      "@common/*": ["src/common/*"]
     }
   }
 }
