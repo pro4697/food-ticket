@@ -72,8 +72,7 @@ const Img = styled.img`
   display: flex;
   width: 100%;
   border-radius: 5px;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin: auto 0;
 `;
 
 const QrCode = styled(QRCode)`
