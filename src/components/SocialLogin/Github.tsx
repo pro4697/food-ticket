@@ -39,7 +39,6 @@ function GithubBtn({ callback = true }) {
           history.push('/login');
           history.push('/');
         } else {
-          console.error(response.data.message);
           alert('로그인에 실패하였습니다');
           history.push('/login');
         }

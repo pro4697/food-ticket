@@ -130,7 +130,6 @@ function LoginPage(props: TLoginPageParams) {
           }
         })
         .catch((err: any) => {
-          console.error(err);
           setFormErrorMessage(err);
           setTimeout(() => {
             setFormErrorMessage('');
