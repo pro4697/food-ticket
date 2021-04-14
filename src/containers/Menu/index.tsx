@@ -7,7 +7,7 @@ import { SERVER } from '@common/config';
 import { BoxIcon, LoadingIcon } from '@common/Style_Etc';
 import { message, Typography } from 'antd';
 import axios from 'axios';
-// import BootPay from 'bootpay-js';
+import BootPay from 'bootpay-js';
 import styled from 'styled-components';
 
 import CartContainer from './Cart';
@@ -92,40 +92,39 @@ function MenuPage() {
 
     const totalTicketCnt = menu.reduce((acc, v) => acc + v.cnt, 0);
 
-    // BootPay.request({
-    //   price: price,
-    //   application_id: '5cc7f458396fa6771abd07a8',
-    //   name: `식권 ${totalTicketCnt}장`,
-    //   order_id: '1234', // (이 결제를 식별할 수 있는 고유 주문 번호)
-    //   // pg: '',
-    //   // method: '',
-    //   show_agree_window: 0, // 결제 동의창 띄우기 여부 1 - 띄움, 0 - 띄우지 않음
-    // })
-    //   .error((data) => {
-    //     const msg = `결제 에러입니다.: ${JSON.stringify(data)}`;
-    //     alert(msg);
-    //     console.log(data);
-    //   })
-    //   .cancel(() => {})
-    //   .done(() => {
-    //     const variable = { _id: user.userData._id, Cart: [] };
-    //     menu.forEach((menu) => {
-    //       if (menu.cnt > 0) {
-    //         variable.Cart.push(menu);
-    //       }
-    //     });
+    await BootPay.request({
+      price,
+      application_id: '5cc7f458396fa6771abd07a8',
+      name: `식권 ${totalTicketCnt}장`,
+      order_id: '1234', // (이 결제를 식별할 수 있는 고유 주문 번호)
+      // pg: '',
+      // method: '',
+      show_agree_window: 0, // 결제 동의창 띄우기 여부 1 - 띄움, 0 - 띄우지 않음
+    })
+      .error((data) => {
+        const msg = `결제 에러입니다.: ${JSON.stringify(data)}`;
+        message.success(msg);
+      })
+      .cancel(() => {})
+      .done(() => {
+        const ticket: { _id: string; Cart: TMenuType[] } = { _id: user.userData._id, Cart: [] };
+        menu.forEach((item) => {
+          if (item.cnt > 0) {
+            ticket.Cart.push(item);
+          }
+        });
 
-    //     axios.post(`${SERVER}/api/tickets/payment`, variable).then((response) => {
-    //       if (response.data.success) {
-    //         message.success('식권 구매 완료.');
-    //         setTimeout(() => {
-    //           history.push('/ticket');
-    //         }, 750);
-    //       } else {
-    //         alert('식권 구매후 저장 오류');
-    //       }
-    //     });
-    //   });
+        axios.post(`${SERVER}/api/tickets/payment`, ticket).then((response) => {
+          if (response.data.success) {
+            message.success('식권 구매 완료.');
+            setTimeout(() => {
+              history.push('/ticket');
+            }, 750);
+          } else {
+            message.success('식권 구매후 저장 오류.');
+          }
+        });
+      });
   };
 
   if (loading && menu.length !== 0) {
