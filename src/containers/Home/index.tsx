@@ -38,6 +38,7 @@ const Title = styled.div`
 
 const CardContainer = styled(Row)`
   width: 100%;
+  border: 0;
   @media (max-width: 767px) {
     padding: 5px !important;
     margin: 0 !important;
@@ -52,12 +53,11 @@ const StyledLink = styled(Link)`
   position: fixed;
   top: 0;
   align-items: center;
-  border: 1px solid transparent;
-  border-radius: 5px;
   transition: 0.2s;
   height: 100%;
   width: 100%;
   overflow: visible !important;
+  border: 0;
   @media (max-width: 767px) {
     position: relative;
     flex-direction: column;
@@ -91,7 +91,7 @@ const Blur = styled.div`
   width: 100%;
   height: 100%;
   z-index: 0;
-  opacity: 0.6;
+  opacity: 0.55;
   background-color: white;
   transition: 0.5s;
   @media (max-width: 767px) {
@@ -133,6 +133,7 @@ const Card = styled(Col)`
   -ms-animation: ${FadeIn} 0.3s ease;
   -o-animation: ${FadeIn} 0.3s ease;
   animation: ${FadeIn} 0.3s ease;
+  border: 0;
   &:hover ${StyledLink} {
     @media (max-width: 767px) {
       transform: scale(1.07);
