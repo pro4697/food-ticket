@@ -4,6 +4,7 @@ export type TReducer = {
       _id: string;
       name: string;
       isAuth: boolean;
+      error: boolean;
       isAdmin: boolean;
       role: boolean;
     };
