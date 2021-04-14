@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { TReducer } from '@redux/index';
 import { Menu } from 'antd';
@@ -23,14 +23,15 @@ const StyledMenu = styled(Menu)`
 
 function LeftMenu({ mode }: TSideMenuParams) {
   const user = useSelector((state: TReducer) => state.user);
+  const { pathname } = useLocation<string>();
 
   if (user?.userData && user?.userData?.role) {
     return (
-      <StyledMenu mode={mode}>
-        <Menu.Item key="menuUploads">
+      <StyledMenu mode={mode} selectedKeys={[pathname]}>
+        <Menu.Item key="/menu_uploads">
           <Link to="/menu_uploads">Menu Uploads</Link>
         </Menu.Item>
-        <Menu.Item key="qrReader">
+        <Menu.Item key="/qr_reader">
           <Link to="/qr_reader">QR Reader</Link>
         </Menu.Item>
       </StyledMenu>

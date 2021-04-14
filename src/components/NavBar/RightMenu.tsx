@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { TReducer } from '@/redux';
 import { deleteUser, logoutUser } from '@redux/actions/user_actions';
@@ -13,6 +13,7 @@ const Div = styled.div``;
 function RightMenu({ mode }: TSideMenuParams) {
   const dispatch = useDispatch<any>();
   const user = useSelector((state: TReducer) => state.user);
+  const { pathname } = useLocation<string>();
 
   const logoutHandler = () => {
     dispatch(logoutUser()).then((response: any) => {
@@ -41,11 +42,11 @@ function RightMenu({ mode }: TSideMenuParams) {
 
   if (user.userData && !user.userData.isAuth) {
     return (
-      <Menu mode={mode}>
-        <Menu.Item key="mail">
+      <Menu mode={mode} selectedKeys={[pathname]}>
+        <Menu.Item key="/login">
           <Link to="/login">Sign in</Link>
         </Menu.Item>
-        <Menu.Item key="app">
+        <Menu.Item key="/register">
           <Link to="/register">Sign up</Link>
         </Menu.Item>
       </Menu>
@@ -53,10 +54,10 @@ function RightMenu({ mode }: TSideMenuParams) {
   }
   return (
     <Menu mode={mode}>
-      <Menu.Item key="delete">
+      <Menu.Item key="/delete">
         <Div onClick={deleteHandler}>Delete account</Div>
       </Menu.Item>
-      <Menu.Item key="logout">
+      <Menu.Item key="/logout">
         <Div onClick={logoutHandler}>Logout</Div>
       </Menu.Item>
     </Menu>
