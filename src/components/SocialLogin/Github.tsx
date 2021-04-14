@@ -2,20 +2,52 @@ import { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { saveToken, SERVER } from '@common/config';
-import { LoadingIcon, SocialIcon, StyledApp } from '@common/Style_Etc';
+import { LoadingIcon, StyledApp } from '@common/Style_Etc';
 import { message } from 'antd';
 import axios from 'axios';
 import qs from 'qs';
 import styled from 'styled-components';
 
 const GithubButton = styled.a`
-  display: flex;
-  margin: 0 auto 0 30px;
-  border-radius: 50%;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  position: relative;
+  background-color: rgb(38, 41, 46);
+  margin-left: 12px;
+  color: white;
+  width: 100%;
+  height: 32px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  &:hover {
+    color: white;
+    background-color: rgb(100, 100, 100);
+  }
+`;
+
+const Icon = styled.i`
+  position: absolute;
+  top: 2px;
+  left: 2px;
+`;
+
+const Line = styled.div`
+  position: absolute;
+  width: 1px;
+  height: 26px;
+  top: 3px;
+  left: 32px;
+  background-color: grey;
+  opacity: 0.6;
+`;
+
+const Span = styled.div`
+  position: absolute;
+  text-align: center;
+  line-height: 32px;
+  right: 0;
+  height: 100%;
+  font-size: 12px;
+  width: 80%;
 `;
 
 const fallback = 'http://localhost:3000/githubLogin';
@@ -46,19 +78,19 @@ function GithubBtn({ callback = true }) {
     }
   }, [callback, history, location]);
 
+  if (callback) {
+    return (
+      <StyledApp>
+        <LoadingIcon />
+      </StyledApp>
+    );
+  }
   return (
-    <>
-      {callback && (
-        <StyledApp>
-          <LoadingIcon />
-        </StyledApp>
-      )}
-      {!callback && (
-        <GithubButton href={link}>
-          <SocialIcon src="/images/github.png" />
-        </GithubButton>
-      )}
-    </>
+    <GithubButton href={link}>
+      <Icon className="xi-github xi-2x" />
+      <Line />
+      <Span>Login with Github</Span>
+    </GithubButton>
   );
 }
 

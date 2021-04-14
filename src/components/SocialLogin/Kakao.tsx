@@ -1,7 +1,6 @@
 import _KaKaoLogin from 'react-kakao-login';
 import { Props } from 'react-kakao-login/lib/types';
 
-import { SocialIcon } from '@common/Style_Etc';
 import styled from 'styled-components';
 
 type TKakaoBtnParams = {
@@ -9,18 +8,39 @@ type TKakaoBtnParams = {
 };
 
 const KaKaoLogin = styled(_KaKaoLogin)`
-  display: flex !important;
-  padding: 0 !important;
-  margin: 0 30px 0 auto;
-  width: 36px !important;
-  background-color: transparent !important;
-  border-color: transparent !important;
-  border: 0 !important;
-  border-radius: 50%;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  position: relative !important;
+  width: 100% !important;
+  height: 32px !important;
+  border-radius: 2px !important;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  &:hover {
+    background-color: rgb(255, 245, 0) !important;
+  }
+`;
+
+const Icon = styled.i`
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
+const Line = styled.div`
+  position: absolute;
+  width: 1px;
+  height: 26px;
+  top: 2px;
+  left: 32px;
+  background-color: grey;
+  opacity: 0.6;
+`;
+
+const Span = styled.div`
+  position: absolute;
+  line-height: 0px;
+  right: 0;
+  width: 80%;
+  font-size: 12px;
 `;
 
 function KakaoBtn({ loginAction }: TKakaoBtnParams) {
@@ -40,7 +60,11 @@ function KakaoBtn({ loginAction }: TKakaoBtnParams) {
 
   return (
     <KaKaoLogin needProfile onFail={responseFail} onSuccess={responseKaKao} token="5b2bf4d6b26d272e0e11e17d0cac093b">
-      <SocialIcon src="/images/kakao.png" />
+      <>
+        <Icon className="xi-kakaotalk xi-2x" />
+        <Line />
+        <Span>Login with Kakao</Span>
+      </>
     </KaKaoLogin>
   );
 }

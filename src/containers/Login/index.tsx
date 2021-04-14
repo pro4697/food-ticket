@@ -7,7 +7,7 @@ import { saveToken } from '@common/config';
 import { StyledApp } from '@common/Style_Etc';
 import { GithubLogin, KakaoLogin } from '@components/SocialLogin';
 import { loginUser, registerUser, TUserData } from '@redux/actions/user_actions';
-import { Button, Checkbox, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, Typography } from 'antd';
 import { Formik } from 'formik';
 import styled from 'styled-components';
 import * as Yup from 'yup';
@@ -41,42 +41,33 @@ const FormErrorMessage = styled.p`
 
 const StyledBtn = styled(Button)`
   width: 100%;
-  margin: 10px 0;
 `;
 
 const SocialLogin = styled.div`
   display: flex;
-  justify-content: space-around;
-  margin: auto;
-  /* margin: 10px 0; */
+  margin: 24px auto;
   @media (max-width: 768px) {
     /* margin: 5px 0; */
   }
 `;
 
-const Register = styled.div`
-  margin-top: -5px;
-  text-align: right;
+const Register = styled(Button)`
+  color: grey;
+  border: 1px solid #d9d9d9;
+  margin-top: 24px;
+  width: 100%;
 `;
 
 function LoginPage(props: TLoginPageParams) {
   const dispatch = useDispatch<any>();
   const history = useHistory();
-  const rememberMeChecked = !!localStorage.getItem('rememberMe');
 
   const [formErrorMessage, setFormErrorMessage] = useState('');
-  const [rememberMe, setRememberMe] = useState(rememberMeChecked);
-
-  const handleRememberMe = () => {
-    setRememberMe(!rememberMe);
-  };
 
   const saveUserData = (params: any) => {
     localStorage.setItem('userId', params.userId);
     saveToken(params);
   };
-
-  const initialEmail = localStorage.getItem('rememberMe') ? localStorage.getItem('rememberMe') : '';
 
   const loginAction = ({ values, isSocial, setSubmitting }: TLoginAction) => {
     setTimeout(() => {
@@ -91,12 +82,6 @@ function LoginPage(props: TLoginPageParams) {
             // 로그인 성공시
             saveUserData(response.payload);
             localStorage.setItem('msg', 'true');
-            // Kakao 로그인이면 email자동저장 안함
-            if (rememberMe === true && !isSocial) {
-              localStorage.setItem('rememberMe', values.email as string);
-            } else {
-              localStorage.removeItem('rememberMe');
-            }
             history.push('/');
           } else if (isSocial) {
             // 카카오로 처음 로그인 하는경우 자동 회원가입
@@ -144,7 +129,7 @@ function LoginPage(props: TLoginPageParams) {
   return (
     <Formik
       initialValues={{
-        email: initialEmail,
+        email: '',
         password: '',
       }}
       onSubmit={(values, { setSubmitting }) => {
@@ -190,20 +175,16 @@ function LoginPage(props: TLoginPageParams) {
             {formErrorMessage && <FormErrorMessage>{formErrorMessage}</FormErrorMessage>}
 
             <Form.Item>
-              <Checkbox checked={rememberMe} id="rememberMe" onChange={handleRememberMe}>
-                Remember me
-              </Checkbox>
               <StyledBtn disabled={isSubmitting} onClick={handleSubmit as any} type="primary">
-                Log in
+                Login
               </StyledBtn>
-              <br />
+              <Register>
+                <Link to="/register">Sign Up</Link>
+              </Register>
               <SocialLogin>
                 <KakaoLogin loginAction={loginAction} />
                 <GithubLogin {...props} callback={false} />
               </SocialLogin>
-              <Register>
-                <Link to="/register">Sign Up</Link>
-              </Register>
             </Form.Item>
           </Form>
         </StyledApp>
