@@ -90,7 +90,7 @@ function TicketPage() {
   const [IntervalId, setIntervalId] = useState<any>();
 
   const getTicket = (userData: TReducer['user']['userData']) => {
-    if (typeof userData !== 'undefined') {
+    if (userData !== undefined) {
       axios
         .get(`${SERVER}/api/tickets/ticket`, {
           params: {
@@ -110,10 +110,10 @@ function TicketPage() {
 
   // mount
   useEffect(() => {
-    if (!Loading) {
+    if (!Loading && user.userData?.error === undefined) {
       getTicket(user.userData);
     }
-  }, [Loading, user]);
+  }, [user]);
 
   // unmount
   useEffect(
