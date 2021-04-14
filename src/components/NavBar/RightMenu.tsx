@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 import { TSideMenuParams } from './index';
 
-const Div = styled.div``;
+const Div = styled.a``;
 
 function RightMenu({ mode }: TSideMenuParams) {
   const dispatch = useDispatch<any>();
@@ -53,7 +53,7 @@ function RightMenu({ mode }: TSideMenuParams) {
     );
   }
   return (
-    <Menu mode={mode}>
+    <Menu mode={mode} selectedKeys={[pathname]}>
       <Menu.Item key="/delete">
         <Div onClick={deleteHandler}>Delete account</Div>
       </Menu.Item>
