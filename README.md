@@ -7,6 +7,7 @@
 -   https://foodticket.xyz/
 
 ### Stack
+-   TypeScript
 -   React JS
 -   Node JS
 -   Express JS
@@ -20,9 +21,6 @@
 -   BootPay (https://www.bootpay.co.kr/) PG결제
 
 ### etc
--   Typescript 버전 (https://github.com/pro4697/Food-Ticket_TS)
--   jQuery 버전 (https://github.com/pro4697/Food_Ticket_jQuery)
--   SSL 적용, nginx
 -   Function component
 -   styled-components
 -   React Hook, Redux

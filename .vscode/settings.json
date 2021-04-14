@@ -1,0 +1,18 @@
+{
+  "editor.formatOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.options": {
+    "extensions": [".html", ".ts", ".js", ".tsx"]
+  },
+  "files.autoSaveDelay": 500,
+  "eslint.packageManager": "yarn",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.prettier": true,
+    "source.fixAll.stylelint": true
+  },
+  "javascript.format.enable": false,
+  "typescript.format.enable": false,
+  "files.associations": { "*.svg": "html" }
+}

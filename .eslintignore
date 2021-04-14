@@ -1,0 +1,5 @@
+build/*
+public/*
+src/react-app-env.d.ts
+.eslintrc.js
+craco.config.js
