@@ -113,10 +113,14 @@ function LoginPage() {
           }
         })
         .catch((err: any) => {
-          setFormErrorMessage(err);
-          setTimeout(() => {
-            setFormErrorMessage('');
-          }, 3000);
+          if (err?.message !== 'Network Error') {
+            setFormErrorMessage(err);
+            setTimeout(() => {
+              setFormErrorMessage('');
+            }, 3000);
+            return;
+          }
+          alert('Server is offline');
         });
       if (setSubmitting) {
         setSubmitting(false);
