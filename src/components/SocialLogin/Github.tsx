@@ -27,7 +27,7 @@ const GithubButton = styled.a`
 const Icon = styled.i`
   position: absolute;
   top: 2px;
-  left: 2px;
+  left: 3px;
 `;
 
 const Line = styled.div`
