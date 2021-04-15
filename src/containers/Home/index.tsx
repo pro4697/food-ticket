@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { TReducer } from '@/redux';
+import { SERVER } from '@common/config';
 import { FadeIn, LoadingIcon } from '@common/Style_Etc';
 import { Col, message, Row } from 'antd';
 import styled from 'styled-components';
@@ -182,7 +183,7 @@ function LandingPage() {
               <Img
                 alt={sectionName[idx]}
                 draggable="false"
-                src={`${process.env.PUBLIC_URL}/images/${idx + 1}.png`}
+                src={`${SERVER}/uploads/${idx + 1}.png`}
                 style={{ objectFit: 'cover' }}
               />
               <CardTitle>{section}</CardTitle>
