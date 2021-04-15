@@ -65,12 +65,12 @@ function GithubBtn({ callback = true }) {
       axios.post(`${SERVER}/api/users/github`, { code }).then((response) => {
         if (response.data.success) {
           localStorage.setItem('userId', response.data.userId);
+          localStorage.setItem('msg', 'true');
           saveToken(response.data);
-          history.push('/login');
-          history.push('/');
+          history.replace('/');
         } else {
           alert('로그인에 실패하였습니다');
-          history.push('/login');
+          history.replace('/login');
         }
       });
     }

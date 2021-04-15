@@ -161,8 +161,8 @@ function LandingPage() {
   const user = useSelector((state: TReducer) => state?.user);
 
   useEffect(() => {
-    if (typeof user.userData !== 'undefined') {
-      if (typeof user.userData.name !== 'undefined') {
+    if (typeof user?.userData !== 'undefined') {
+      if (typeof user?.userData?.name !== 'undefined') {
         if (localStorage.getItem('msg') === 'true') {
           message.success(`${user?.userData?.name || 'Guest'}님 환영합니다`, 3);
           localStorage.setItem('msg', 'false');
