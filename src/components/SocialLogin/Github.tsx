@@ -3,7 +3,6 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import { saveToken, SERVER } from '@common/config';
 import { LoadingIcon, StyledApp } from '@common/Style_Etc';
-import { message } from 'antd';
 import axios from 'axios';
 import qs from 'qs';
 import styled from 'styled-components';
@@ -67,7 +66,6 @@ function GithubBtn({ callback = true }) {
         if (response.data.success) {
           localStorage.setItem('userId', response.data.userId);
           saveToken(response.data);
-          message.success('로그인 성공', 1);
           history.push('/login');
           history.push('/');
         } else {
