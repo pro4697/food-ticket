@@ -4,10 +4,9 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { TReducer } from '@/redux';
+import { FadeIn, LoadingIcon } from '@common/Style_Etc';
 import { Col, message, Row } from 'antd';
 import styled from 'styled-components';
-
-import { FadeIn, LoadingIcon } from '../../common/Style_Etc';
 
 const App = styled.div`
   flex-direction: column;
@@ -15,7 +14,6 @@ const App = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* min-height: 600px; */
   margin: auto;
   @media (max-width: 767px) {
     padding: 0rem;
@@ -181,7 +179,12 @@ function LandingPage() {
         {sectionName.map((section, idx) => (
           <Card key={section} md={6} sm={12} xs={12}>
             <StyledLink draggable="false" to={isSection(idx + 1)}>
-              <Img alt={sectionName[idx]} draggable="false" src={`/images/${idx + 1}.png`} style={{ objectFit: 'cover' }} />
+              <Img
+                alt={sectionName[idx]}
+                draggable="false"
+                src={`${process.env.PUBLIC_URL}/images/${idx + 1}.png`}
+                style={{ objectFit: 'cover' }}
+              />
               <CardTitle>{section}</CardTitle>
               <Blur />
             </StyledLink>

@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 
 import { applyMiddleware, createStore } from 'redux';
 import promiseMiddleware from 'redux-promise';
@@ -18,9 +17,7 @@ ReactDOM.render(
       (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__(),
     )}
   >
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <App />
   </Provider>,
   document.getElementById('root'),
 );

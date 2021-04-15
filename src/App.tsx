@@ -1,5 +1,4 @@
-import { Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Auth from '@common/auth';
 import { GlobalStyle } from '@common/Style_Global';
@@ -24,9 +23,6 @@ const WrapSpacer = styled.div`
 
 const ContentsWarp = styled.div`
   position: relative;
-  /* max-width: 1400px; */
-  /* margin: 0px auto 0px;
-  padding: 16px 16px 50px; */
   box-sizing: border-box;
   min-height: 83vh;
   @media (max-width: 767px) {
@@ -36,7 +32,7 @@ const ContentsWarp = styled.div`
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <GlobalStyle />
       <NavBar />
       <WrapSpacer />
@@ -52,7 +48,7 @@ function App() {
           <Route component={githubLogin} exact path="/githubLogin" />
         </Switch>
       </ContentsWarp>
-    </Suspense>
+    </BrowserRouter>
   );
 }
 
