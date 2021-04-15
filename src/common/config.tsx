@@ -1,4 +1,4 @@
-export const SERVER = 'https://ec2-15-164-225-45.ap-northeast-2.compute.amazonaws.com:8443';
+export const SERVER = 'https://foodticket.xyz:8443';
 // export const SERVER = 'http://localhost:5000';
 
 /// ///////////////////////// For Header Configs //////////////////////////////////
