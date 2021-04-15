@@ -12,6 +12,7 @@ import QrReader from '@containers/QrReader';
 import Register from '@containers/Register';
 import Ticket from '@containers/Ticket';
 import styled from 'styled-components';
+import 'antd/dist/antd.css';
 
 const WrapSpacer = styled.div`
   display: block;

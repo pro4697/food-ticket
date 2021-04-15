@@ -11,9 +11,6 @@ module.exports = function () {
         '@components': resolve('src/components'),
         '@common': resolve('src/common'),
       },
-      devServer: {
-        historyApiFallback: true,
-      },
     },
     jest: {
       configure: {

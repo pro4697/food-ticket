@@ -13,8 +13,6 @@ import useReactRouter from 'use-react-router';
 import LeftMenu from './LeftMenu';
 import RightMenu from './RightMenu';
 
-import 'antd/dist/antd.css';
-
 type TVisible = {
   visible?: boolean;
 };
