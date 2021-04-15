@@ -32,7 +32,7 @@ const ContentsWarp = styled.div`
 
 function App() {
   return (
-    <HashRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter>
       <GlobalStyle />
       <NavBar />
       <WrapSpacer />
