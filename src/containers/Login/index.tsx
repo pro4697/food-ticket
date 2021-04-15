@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { saveToken } from '@common/config';
@@ -11,8 +11,6 @@ import { Button, Form, Input, Typography } from 'antd';
 import { Formik } from 'formik';
 import styled from 'styled-components';
 import * as Yup from 'yup';
-
-type TLoginPageParams = RouteComponentProps;
 
 type TLoginAction = {
   values: {
@@ -58,7 +56,7 @@ const Register = styled(Button)`
   width: 100%;
 `;
 
-function LoginPage(props: TLoginPageParams) {
+function LoginPage() {
   const dispatch = useDispatch<any>();
   const history = useHistory();
 
@@ -183,7 +181,7 @@ function LoginPage(props: TLoginPageParams) {
               </Register>
               <SocialLogin>
                 <KakaoLogin loginAction={loginAction} />
-                <GithubLogin {...props} callback={false} />
+                <GithubLogin callback={false} />
               </SocialLogin>
             </Form.Item>
           </Form>
