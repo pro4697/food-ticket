@@ -1,4 +1,4 @@
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Auth from '@common/auth';
 import { GlobalStyle } from '@common/Style_Global';
@@ -32,7 +32,7 @@ const ContentsWarp = styled.div`
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <GlobalStyle />
       <NavBar />
       <WrapSpacer />
@@ -48,7 +48,7 @@ function App() {
           <Route component={githubLogin} exact path="/githubLogin" />
         </Switch>
       </ContentsWarp>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
