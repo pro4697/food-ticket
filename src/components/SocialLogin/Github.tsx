@@ -49,7 +49,7 @@ const Span = styled.div`
   width: 80%;
 `;
 
-const fallback = 'https://pro4697.github.io/food-ticket/githubLogin';
+const fallback = 'https://foodticket.xyz/githubLogin';
 
 function GithubBtn({ callback = true }) {
   const link = `https://github.com/login/oauth/authorize?client_id=b1ca53d55037a1da7d82&redirect_uri=${fallback}`;
