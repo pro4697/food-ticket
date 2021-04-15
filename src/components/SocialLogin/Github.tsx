@@ -63,6 +63,8 @@ function GithubBtn({ callback = true }) {
         ignoreQueryPrefix: true,
       });
 
+      console.log('code', code);
+
       axios.post(`${SERVER}/api/users/github`, { code }).then((response) => {
         if (response.data.success) {
           localStorage.setItem('userId', response.data.userId);
@@ -71,8 +73,8 @@ function GithubBtn({ callback = true }) {
           history.push('/login');
           history.push('/');
         } else {
-          console.log(response);
-          console.log(response.data);
+          console.log('response', response);
+          console.log('response.data', response.data);
           alert('로그인에 실패하였습니다');
           history.push('/login');
         }
